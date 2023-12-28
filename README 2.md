@@ -59,7 +59,11 @@ Mysql
  Configure as informações do seu banco de dados e servidor SMTP no arquivo .env, que deve ser criado na raiz do projeto. Utilize o arquivo .env.example como referência para criar o seu   arquivo .env.
 </p>
 
+# Usuário de padrāo
+Email: admin@admin.com
+Password: 33473347
+
+
 
 Você pode conferir a
-[nossa documentação](https://github.com/valdiney/zig/blob/master/docs/instalacao.md) <br>
 Veja nosso video no [youtube](https://www.youtube.com/watch?v=-AOfhCkwYtw)
