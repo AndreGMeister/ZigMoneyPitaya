@@ -1,5 +1,5 @@
-# ZigMoneyPitaya
-ZigMoneyPitaya
+# ZigMoney-Pitaya
+Relatório de vendas simples, rápido e acessível!
 
 # DESCRIÇĀO
 
