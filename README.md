@@ -8,6 +8,6 @@ O ZigMoney é um projeto que visa ajudar pequenos comércios e comerciantes que 
 </p>
 
 <p>
-🚧 Projeto em desenvolvimento e recebendo commit sempre que possível! ✊
+🚧 Projeto em desenvolvimento e recebendo commit sempre que possível! ✊ <br>
 🚀 Estamos trabalhando no modulo de fluxo de caixa!
 </p>
