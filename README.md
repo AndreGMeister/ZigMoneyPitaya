@@ -11,3 +11,6 @@ O ZigMoney é um projeto que visa ajudar pequenos comércios e comerciantes que 
 🚧 Projeto em desenvolvimento e recebendo commit sempre que possível! ✊ <br>
 🚀 Nos ajude a passar para o proximo level
 </p>
+
+Simpatizou com o projeto? Não seja tímido, Ajude o nosso projeto! <br>
+Chave Pix: zigmoneypdv@hotmail.com
