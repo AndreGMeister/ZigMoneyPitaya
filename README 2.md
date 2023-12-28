@@ -46,17 +46,17 @@ Que tal nos ajudar nesta empreitada?
 
 # Instalação
 
-Sinceramente é super simples. Vamos para os Requisitos: <br>
+Sinceramente é super simples. <br>
 PHP 8.2 <br>
 Composer <br>
 Mysql
 
 # Configuraçāo
 <p>
-  Dentro da pasta de dump na raiz do projeto, encontra-se o arquivo dump.sql. Nele contem toda a extrutura de banco necessario para o funcionamento do projeto. 
+  Na pasta "dump" na raiz do projeto, você encontrará o arquivo dump.sql, que contém toda a estrutura de banco necessária para o funcionamento do projeto.
 </p>
 <p>
-  Sete suas configuracoes de banco de dados e servidor SMTP dentro do arquivo .env que deve ser criado na raiz do projeto. Use o arquivo .env.example como base para criar o seu .env
+ Configure as informações do seu banco de dados e servidor SMTP no arquivo .env, que deve ser criado na raiz do projeto. Utilize o arquivo .env.example como referência para criar o seu   arquivo .env.
 </p>
 
 
