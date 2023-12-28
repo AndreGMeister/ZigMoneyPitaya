@@ -46,6 +46,20 @@ Que tal nos ajudar nesta empreitada?
 
 # Instalação
 
+Sinceramente é super simples. Vamos para os Requisitos: <br>
+PHP 8.2 <br>
+Composer <br>
+Mysql
+
+# Configuraçāo
+<p>
+  Dentro da pasta de dump na raiz do projeto, encontra-se o arquivo dump.sql. Nele contem toda a extrutura de banco necessario para o funcionamento do projeto. 
+</p>
+<p>
+  Sete suas configuracoes de banco de dados e servidor SMTP dentro do arquivo .env que deve ser criado na raiz do projeto. Use o arquivo .env.example como base para criar o seu .env
+</p>
+
+
 Você pode conferir a
 [nossa documentação](https://github.com/valdiney/zig/blob/master/docs/instalacao.md) <br>
 Veja nosso video no [youtube](https://www.youtube.com/watch?v=-AOfhCkwYtw)
