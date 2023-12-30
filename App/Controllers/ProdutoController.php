@@ -16,8 +16,6 @@ class ProdutoController extends Controller
     protected $get;
     protected $layout;
     protected $idEmpresa;
-    protected $diretorioImagemProdutoNoEnv;
-    protected $diretorioImagemProdutoPadrao;
 
     public function __construct()
     {

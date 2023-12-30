@@ -114,7 +114,7 @@ class Logged
         $perfil = $perfil->find($user->id_perfil);
 
         $empresa = new Empresa();
-        $empresa = $empresa->find($dadosUsuario->id_empresa);
+        $empresa = $empresa->find($user->id_empresa);
 
         Session::set('logged', true);
 

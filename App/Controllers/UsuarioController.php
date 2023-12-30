@@ -23,7 +23,6 @@ class UsuarioController extends Controller
     protected $idEmpresa;
     protected $idUsuarioLogado;
     protected $idPerfilUsuarioLogado;
-    protected $diretorioImagemUsuarioPadrao;
 
     public function __construct()
     {
@@ -57,12 +56,6 @@ class UsuarioController extends Controller
         $usuario = new Usuario();
         $dados = (array)$this->post->data();
         $dados['password'] = createHash($dados['password']);
-
-        # Verifica se houve erro durante o upload de imagem
-        if (is_array($retornoImagem)) {
-            Session::flash('error', $retornoImagem['error']);
-            return $this->get->redirectTo("usuario");
-        }
 
         $dados['imagem'] = (!is_null(uploadBase64Image('imagem')) ? uploadBase64Image('imagem') : $dadosUsuario->imagem) ;
 
