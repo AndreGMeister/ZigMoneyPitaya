@@ -55,7 +55,7 @@ class ProdutoController extends Controller
             $dados['ativar_quantidade'] = 1;
         }
 
-        $dados['imagem'] = (!is_null(uploadBase64Image('imagem')) ? uploadBase64Image('imagem') : $dadosProduto->imagem);
+        $dados['imagem'] = uploadBase64Image('imagem');
 
         try {
             $idProduto = $produto->save($dados);

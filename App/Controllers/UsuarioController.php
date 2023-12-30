@@ -57,7 +57,7 @@ class UsuarioController extends Controller
         $dados = (array)$this->post->data();
         $dados['password'] = createHash($dados['password']);
 
-        $dados['imagem'] = (!is_null(uploadBase64Image('imagem')) ? uploadBase64Image('imagem') : $dadosUsuario->imagem) ;
+        $dados['imagem'] = uploadBase64Image('imagem');
 
         try {
             # Cadastra Usuário
