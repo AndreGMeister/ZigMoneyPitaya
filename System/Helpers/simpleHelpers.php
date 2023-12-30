@@ -105,8 +105,8 @@ function uploadBase64Image($filesName)
             $detectedType = mime_content_type($_FILES[$filesName]['tmp_name']);
 
             if (in_array($detectedType, $allowedTypes)) {
-                $imagemBinario = file_get_contents($_FILES[$filesName]['tmp_name']);
-                return 'data:' . $detectedType . ';base64,' . base64_encode($imagemBinario);
+                $image = file_get_contents($_FILES[$filesName]['tmp_name']);
+                return 'data:' . $detectedType . ';base64,' . base64_encode($image);
             } else {
                 throw new Exception('Invalid image type. Allowed types are: PNG, JPEG, GIF');
             }
