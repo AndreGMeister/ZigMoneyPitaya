@@ -121,4 +121,11 @@ class Cliente extends Model
             OR cpf = '{$termo}'
         ");
     }
+
+    public function ativos($idEmpresa)
+    {
+        return $this->query("
+            SELECT id, nome FROM clientes WHERE id_empresa = {$idEmpresa} AND deleted_at IS NULL
+        ");
+    }
 }

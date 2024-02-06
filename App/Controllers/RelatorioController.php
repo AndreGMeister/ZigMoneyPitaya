@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Empresa;
+use App\Models\Cliente;
 use App\Repositories\RelatorioVendasPorPeriodoRepository;
 use App\Rules\Logged;
 use App\Services\Usuarios\BuscaUsuariosService;
@@ -46,6 +47,7 @@ class RelatorioController extends Controller
     public function vendasPorPeriodo()
     {
         $usuarios = $this->buscaUsuariosService->ativos($this->idEmpresa, $this->idPerfilUsuarioLogado);
+        $clientes = (new Cliente())->ativos($this->idEmpresa);
 
         $relatorioVendas = new RelatorioVendasPorPeriodoRepository();
         $periodoDisponivelParaConsulta = $relatorioVendas->periodoDisponivelParaConsulta($this->idEmpresa);
@@ -53,7 +55,8 @@ class RelatorioController extends Controller
         $this->view('relatorio/vendasPorPeriodo/index', $this->layout,
         compact(
             'usuarios',
-            'periodoDisponivelParaConsulta'
+            'periodoDisponivelParaConsulta',
+            'clientes'
         ));
     }
 
@@ -72,10 +75,16 @@ class RelatorioController extends Controller
                 $idUsuario = $this->post->data()->id_usuario;
             }
 
+            $idCliente = false;
+            if ($this->post->data()->id_cliente != 'todos') {
+                $idCliente = $this->post->data()->id_cliente;
+            }
+
             $vendas = $relatorioVendas->agrupamentoDeVendasPorPeriodo(
                 ['de' => $de, 'ate' => $ate],
                 $idUsuario,
-                $this->idEmpresa
+                $this->idEmpresa,
+                $idCliente
             );
 
             if ($vendas && count($vendas) > 0) {
@@ -91,13 +100,15 @@ class RelatorioController extends Controller
             $meiosDePagamento = $relatorioVendas->totalVendidoPorMeioDePagamento(
                 ['de' => $de, 'ate' => $ate],
                 $idUsuario,
-                $this->idEmpresa
+                $this->idEmpresa,
+                $idCliente
             );
 
             $totalDasVendas = $relatorioVendas->totalDasVendas(
                 ['de' => $de, 'ate' => $ate],
                 $idUsuario,
-                $this->idEmpresa
+                $this->idEmpresa,
+                $idCliente
             );
         }
 

@@ -479,7 +479,7 @@
                     <?php echo $valor->quantidade . ',';?>
                     <?php endforeach?>
                 ],
-                backgroundColor: '#00cccc',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: '#255949',
                 borderWidth: 1
             }
@@ -521,7 +521,8 @@
                     <?php echo $valor->valor . ',';?>
                     <?php endforeach?>
                 ],
-                backgroundColor: '#a0d2ae',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                
                 borderColor: '#087e5e',
                 borderWidth: 1
             }
@@ -564,7 +565,7 @@
                     <?php echo $mes->total . ',';?>
                     <?php endforeach?>
                 ],
-                backgroundColor: '#a0d2ae',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: '#087e5e',
                 borderWidth: 1
             }

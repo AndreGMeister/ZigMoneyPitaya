@@ -187,10 +187,10 @@ $configPdv = $configPdv->configPdv(Session::get('idEmpresa'));
                                 <?php echo Session::get('legendaPerfil'); ?>
                             </small>
 
-                            <!--<small style="font-size:11px;" class="legendaPerfil">
+                            <small style="font-size:11px;" class="legendaPerfil">
                                <i class="fas fa-store"></i>
                                 <?php echo stringAbreviation(ucfirst(Session::get('nomeEmpresa')), 50, '...'); ?>
-                            </small>-->
+                            </small>
                         </i>
                     </a>
                 </div>

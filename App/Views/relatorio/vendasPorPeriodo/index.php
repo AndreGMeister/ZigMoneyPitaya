@@ -51,18 +51,18 @@
             <input type="hidden" name="_token" value="<?php echo TOKEN; ?>"/>
 
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <div class="form-group">
-                        <label for="periodo_de">Período de</label>
+                        <label for="periodo_de">Período de *</label>
                         <input type="date" class="form-control busca-sem-codigo" name="de" id="periodo_de"
                                value="<?php echo date('Y') . '-' . date('m') . '-' . '01' ?>">
                         <small style="color:#999999">Primeira Venda: <?php echo ( ! is_null($periodoDisponivelParaConsulta->primeiraVenda) ? $periodoDisponivelParaConsulta->primeiraVenda : 'Não realizada!');?></small>
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <div class="form-group">
-                        <label for="periodo_ate">Período até</label>
+                        <label for="periodo_ate">Período até *</label>
                         <input type="date" class="form-control busca-sem-codigo" name="ate" id="periodo_ate"
                                value="<?php echo date('Y-m-d') ?>">
                         <small style="color:#999999">Ultima Venda:
@@ -72,7 +72,7 @@
 
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="id_usuario">Vendedor *</label>
+                        <label for="id_usuario">Vendedores</label>
                         <select class="form-control js-example-basic-single busca-sem-codigo" name="id_usuario" id="id_usuario">
                             <option value="todos">Todos</option>
                             <?php foreach ($usuarios as $usuario) : ?>
@@ -82,23 +82,32 @@
                             <?php endforeach; ?>
                         </select>
                     </div>
+                </div>
 
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_usuario">Clientes</label>
+                        <select class="form-control js-example-basic-single busca-sem-codigo" name="id_cliente" id="id_cliente">
+                            <option value="todos">Todos</option>
+                            <?php foreach ($clientes as $cliente) : ?>
+                                <option value="<?php echo $cliente->id; ?>">
+                                    <?php echo $cliente->nome; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+
+              
+                <div class="col-md-12">
                     <button type="submit" class="btn btn-sm btn-success text-right pull-right" id="buscar-vendas"
                             style="margin-left:10px">
                         <i class="fas fa-search"></i> Buscar
                     </button>
 
-                    <a onclick="baixarEmFormatoXls()" class="cool-btn btn btn-sm btn-defoult text-right pull-right"
-                       id="baixar-xls" title="Baixar em formato XLS!">
-                        <i class="fas fa-cloud-download-alt"></i> Xls
-                    </a>
-
-                    <a onclick="baixarEmFormatoPDF()" class="cool-btn btn btn-sm btn-defoult text-right pull-right"
-                       id="baixar-pdf" title="Baixar em formato PDF!">
-                        <i class="fas fa-cloud-download-alt"></i> PDF
-                    </a>
-
+                    
                 </div>
+               
 
             </div>
             <!--end row-->
@@ -110,14 +119,17 @@
 </div>
 
 <div class="row">
+    
     <div class="card col-lg-12 content-div">
         <!--Renderiza a tabela de vendas-->
+       
         <div id="div-tabela-vendas"></div>
         <br>
     </div>
 </div>
 
 <script src="<?php echo BASEURL; ?>/public/assets/js/core/jquery.min.js"></script>
+<script src="<?php echo BASEURL; ?>/public/js/select2.js"></script>
 
 <script type="text/javascript">
     $("#buscar-vendas").click(function () {
@@ -153,4 +165,6 @@
 
         window.location.href = rota;
     }
+
+   $('#id_cliente, #id_usuario').select2();
 </script>

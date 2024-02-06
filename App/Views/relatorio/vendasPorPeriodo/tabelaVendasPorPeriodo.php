@@ -12,6 +12,22 @@
 <?php if (count($vendas) > 0): ?>
     <br>
 
+    <div class="col-md-12">
+        <a onclick="baixarEmFormatoXls()" class="cool-btn btn btn-sm btn-defoult text-right pull-right"
+            id="baixar-xls" title="Baixar em formato XLS!">
+            <i class="fas fa-cloud-download-alt"></i> Xls
+        </a>
+
+        <a onclick="baixarEmFormatoPDF()" class="cool-btn btn btn-sm btn-defoult text-right pull-right"
+            id="baixar-pdf" title="Baixar em formato PDF!">
+            <i class="fas fa-cloud-download-alt"></i> PDF
+        </a>
+    </div>
+
+    <br>
+    <br>
+    <br>
+
     <div style="float:right;">
 
         <h6 style="text-align:right;">

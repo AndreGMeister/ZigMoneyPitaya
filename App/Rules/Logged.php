@@ -89,7 +89,7 @@ class Logged
         return $expireDate <= $now;
     }
 
-    private function deleteRememberData(stdClass $loginRemember, $user)
+    private function deleteRememberData($loginRemember, $user)
     {
         $loginRemember->deleteRememberCookie();
 

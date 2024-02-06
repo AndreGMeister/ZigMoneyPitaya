@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\Cliente;
 use App\Models\ClienteSegmento;
 use App\Models\ClienteTipo;
+use App\Repositories\RelatorioVendaClienteRepository;
 use App\Rules\Logged;
 use Exception;
 use System\Controller\Controller;
@@ -20,6 +21,7 @@ class ClienteController extends Controller
     protected $idEmpresa;
     protected $idUsuario;
     protected $idPerfilUsuarioLogado;
+    protected $relatorioVendaClienteRepository;
 
     public function __construct()
     {
@@ -31,6 +33,8 @@ class ClienteController extends Controller
         $this->idEmpresa = Session::get('idEmpresa');
         $this->idUsuario = Session::get('idUsuario');
         $this->idPerfilUsuarioLogado = Session::get('idPerfil');
+
+        $this->relatorioVendaClienteRepository = new RelatorioVendaClienteRepository();
 
         $logged = new Logged();
         $logged->isValid();
@@ -207,5 +211,25 @@ class ClienteController extends Controller
         $cliente = $cliente->pesquisarClientesParaOpdv($termo, $this->idEmpresa);
 
         echo json_encode($cliente);
+    }
+
+    public function relatoriosDeVendas($idCliente)
+    {
+        $idCliente = out64($idCliente);
+        $cliente = new Cliente();
+        $cliente = $cliente->find($idCliente);
+         
+        $data = [
+            'nome' => $cliente->nome,
+            'totalVendidoAteOMomento' => $this->relatorioVendaClienteRepository->totalVendidoAteOMomento($idCliente),
+            'clienteDesDe' => date('d/m/Y', strtotime($cliente->created_at)),
+            'valorDeVendasPorMesNoAno' => $this->relatorioVendaClienteRepository->valorDeVendasPorMesNoAno(
+                $this->idEmpresa, 
+                $idCliente, 
+                date('Y')
+            )
+        ];
+
+        $this->view('cliente/relatorio', $this->layout, compact('data'));
     }
 }

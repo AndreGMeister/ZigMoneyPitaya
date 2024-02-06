@@ -67,6 +67,7 @@ $route->get('pdvDiferencial/associarClienteAVenda/{idCliente}', 'PdvDiferencialC
 $route->get('pdvDiferencial/desassociarClienteAVenda/{idCliente}', 'PdvDiferencialController@desassociarClienteAVenda');
 $route->get('pdvDiferencial/jaExisteClienteAssociado', 'PdvDiferencialController@jaExisteClienteAssociado');
 
+
 $route->get('pdvDiferencial/alterarAquantidadeDeUmProdutoNaMesa/{idProduto}/{quantidade}',
     'PdvDiferencialController@alterarAquantidadeDeUmProdutoNaMesa');
 
@@ -94,6 +95,7 @@ $route->get('cliente/verificaSeEmailExiste/{email}/{idCliente?}', 'ClienteContro
 $route->get('cliente/verificaSeCnpjExiste/{cnpj}/{idCliente?}', 'ClienteController@verificaSeCnpjExiste');
 $route->get('cliente/verificaSeCpfExiste/{cpf}/{idCliente?}', 'ClienteController@verificaSeCpfExiste');
 $route->get('cliente/pesquisarClientesParaOpdv/{termo}', 'ClienteController@pesquisarClientesParaOpdv');
+$route->get('cliente/relatorios-de-vendas/{idCliente}', 'ClienteController@relatoriosDeVendas');
 
 # ----- EnderecoController --------------------------------
 $route->post('clienteEndereco/save', 'ClienteEnderecoController@save');
