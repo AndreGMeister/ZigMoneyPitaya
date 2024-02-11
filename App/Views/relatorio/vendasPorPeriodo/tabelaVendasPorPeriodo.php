@@ -85,9 +85,15 @@
                     <?php if (!is_null($venda->imagem) || $venda->imagem != ''): ?>
                         <img class="imagem-perfil" src="<?php echo $venda->imagem; ?>"
                              alt="Imagem do perfil"
-                             title="<?php echo $venda->nomeUsuario; ?>">
+                             title="Vendedor: <?php echo $venda->nomeUsuario; ?>">
                     <?php else: ?>
                         <i class="fas fa-user" style="font-size:30px"></i>
+                    <?php endif; ?>
+
+                    <?php if ( ! is_null($venda->id_cliente)): ?>
+                        <span class="badge badge-secondary" title="Cliente: <?php echo $venda->nomeCliente;?>">
+                            <i class="fas fa-user"></i>
+                        </span>
                     <?php endif; ?>
                 </td>
 

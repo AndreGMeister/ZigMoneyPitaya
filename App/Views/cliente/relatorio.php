@@ -1,20 +1,28 @@
 <?php $data = (object) $data; ?>
+
+<style>
+   #ul_dados_principais_do_cliente {
+     margin:0;
+     padding:0;
+     list-style:none;
+   }
+</style>
+
 <div class="row">
 
 <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="card card-stats">
             <div class="card-body">
-            <h5 class="card-title"><i class="fas fa-user-tie"></i> Cliente: <?php echo $data->nome;?>
-           
+                <b style="color:red">OBS: TELA EM CONSTRUCAO</b>
+            <h5 class="card-title"><i class="fas fa-user-tie"></i> 
+                Cliente: <?php echo $data->nome;?>
             </h5>
 
-            <ul>
+            <ul id="ul_dados_principais_do_cliente">
                 <li>Vendido até o momento R$ <?php echo real($data->totalVendidoAteOMomento);?></li>
                 <li>Cliente desde <?php echo $data->clienteDesDe;?></li>
             </ul>
             
-                
-           
             </div>
             <div class="card-footer ">
                 <hr>
@@ -36,8 +44,8 @@
         <div class="card card-stats">
             <div class="card-body">
                 <center>
-                    Vendas por dia.
-                    <small style="opacity:0.70">Ultimos 30 dias</small>
+                    Vendas por mês.
+                    <small style="opacity:0.70">Ano de (<?php echo date('Y');?>)</small>
                 </center>
                 <canvas class="grafico" id="grafi-valor-vendas-do-mes-no-ano" width="400" height="185"></canvas>
             </div>
@@ -75,6 +83,9 @@
 
 </div>
 
+<script src="<?php echo BASEURL; ?>/public/assets/js/core/jquery.min.js"></script>
+<script src="<?php echo BASEURL; ?>/public/assets/chartjs/dist/Chart.min.js"></script>
+
 <script>
      ////////////////////////////////////////////////////////
      var ctx = document.getElementById("grafi-valor-vendas-do-mes-no-ano");
@@ -82,14 +93,15 @@
         type: 'line',
         data: {
             labels: [
-                <?php foreach ($data->valorDeVendasPorMesNoAno as $valor):?>
-                <?php echo "\"{$valor->data}\",";?>
+                <?php foreach ($data->valorDeVendasPorMesNoAno as $mes):?>
+                <?php $nomeDoMes = mesesPorExtensoEnumeroDoMes($mes->mes);?>
+                <?php echo "\"{$nomeDoMes}\",";?>
                 <?php endforeach?>
             ],
             datasets: [{
                 label: 'Valor Vendido',
                 data: [
-                    <?php foreach ($valorDeVendasRealizadasPorDia as $valor):?>
+                    <?php foreach ($data->valorDeVendasPorMesNoAno as $valor):?>
                     <?php echo $valor->valor . ',';?>
                     <?php endforeach?>
                 ],

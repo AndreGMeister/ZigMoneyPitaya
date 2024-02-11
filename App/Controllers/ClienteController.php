@@ -230,6 +230,17 @@ class ClienteController extends Controller
             )
         ];
 
+        #dd($data);
+        
+        //$data = (object) $data;
+       /* dd($data->valorDeVendasPorMesNoAno);
+        foreach ($data->valorDeVendasPorMesNoAno as $mes) {
+            echo $mes->mes . '<br>';
+        }
+
+
+        return;*/
+
         $this->view('cliente/relatorio', $this->layout, compact('data'));
     }
 }

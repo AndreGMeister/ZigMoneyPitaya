@@ -34,13 +34,11 @@ class RelatorioVendaClienteRepository
     public function valorDeVendasPorMesNoAno($idEmpresa, $idcliente, $ano)
     {
         $query = $this->venda->query(
-            "SELECT SUM(valor) AS valor, month(created_at) AS data FROM vendas WHERE id_empresa = {$idEmpresa}
+            "SELECT SUM(valor) AS valor, month(created_at) AS mes FROM vendas WHERE id_empresa = {$idEmpresa}
             AND id_cliente = {$idcliente} AND YEAR(created_at) = '{$ano}' AND vendas.deleted_at IS NULL
             GROUP BY month(created_at)"
         );
 
-        dd($query[0]);
-
-        return $query[0];
+        return $query;
     }
 }

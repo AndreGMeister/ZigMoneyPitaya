@@ -138,10 +138,11 @@ class RelatorioVendasPorPeriodoRepository
             meios_pagamentos.legenda, usuarios.id, usuarios.nome AS nomeUsuario, usuarios.imagem,
             vendas.preco, vendas.quantidade, vendas.data_compensacao,
             vendas.quantidade_parcela, vendas.valor_parcela, vendas.id_meio_pagamento,
-            vendas.id_cliente
+            vendas.id_cliente, clientes.nome AS nomeCliente
             FROM vendas INNER JOIN usuarios
             ON vendas.id_usuario = usuarios.id
             INNER JOIN meios_pagamentos ON vendas.id_meio_pagamento = meios_pagamentos.id
+            LEFT JOIN clientes ON vendas.id_cliente = clientes.id
 
             WHERE vendas.id_empresa = {$idEmpresa} AND DATE(vendas.created_at)
             BETWEEN '{$de}' AND '{$ate}' {$queryPorUsuario} {$queryPorCliente}
