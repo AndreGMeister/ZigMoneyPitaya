@@ -53,8 +53,6 @@ class PdvDiferencialController extends Controller
         $produto = new Produto();
         $produtos = $produto->produtosNoPdv($this->idEmpresa);
 
-       //dd($_SESSION['cliente']);
-
         $this->view('pdv/diferencial', $this->layout,
             compact(
                 'meiosPagamentos',

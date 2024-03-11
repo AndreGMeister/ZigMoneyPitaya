@@ -281,6 +281,8 @@ $configPdv = $configPdv->configPdv(Session::get('idEmpresa'));
 <script src="<?php echo BASEURL; ?>/public/js/select2.js"></script>
 <script src="<?php echo BASEURL; ?>/public/js/confirm.js"></script>
 <script src="<?php echo BASEURL; ?>/public/js/maskedInput.js"></script>
+<script src="<?php echo BASEURL; ?>/public/js/inputmask_dist/inputmask.js"></script>
+
 
 <script>
     $(function () {

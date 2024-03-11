@@ -82,19 +82,52 @@
             </div>
 
         </div>
-
+    </div>
+    
+    <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label for="nome">Nome *</label>
+                <label for="nome">Nome do produto *</label>
                 <input type="text" class="form-control nome" name="nome" id="nome"
                        placeholder="Digite o nome do produto!"
                        value="<?php echo isset($produto->id) ? $produto->nome : '' ?>">
             </div>
         </div>
 
-        <div class="col-md-2">
+        <div class="col-md-6">
             <div class="form-group">
-                <label for="preco">R$ Preço *</label>
+                <label for="nome">Unidade *</label>
+                <select class="form-control nome" name="unidade" id="unidade">
+                    <option value="selecione">Selecione</option>
+                    <?php foreach ($unidades as $key => $unidade) : ?>
+                        <?php if (isset($produto->id) &&  $produto->unidade == $key) : ?>
+                            <option value="<?php echo $key; ?>"
+                                    selected="selected"><?php echo $unidade; ?>
+                            </option>
+                        <?php else : ?>
+                            <option value="<?php echo $key; ?>">
+                                <?php echo $unidade; ?>
+                            </option>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+    </div><!--end row-->
+    <hr>
+
+    <div class="row">
+        <!--<div class="col-md-4">
+            <div class="form-group">
+                <label for="preco_custo">R$ Preço de custo</label>
+                <input type="text" class="form-control campo-moeda" name="preco_custo" id="preco_custo" placeholder="00,00"
+                       value="<?php //echo isset($produto->preco_custo) ? real($produto->preco_custo) : '' ?>">
+            </div>
+        </div>-->
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="preco">R$ Preço de venda *</label>
                 <input type="text" class="form-control campo-moeda" name="preco" id="preco" placeholder="00,00"
                        value="<?php echo isset($produto->preco) ? real($produto->preco) : '' ?>">
             </div>
@@ -102,12 +135,27 @@
 
         <div class="col-md-4 div-campo-quantidade quantidade-desablitado">
             <div class="form-group">
-                <label for="quantidade">Quantidade *</label>
+                <label for="quantidade">Quantidade em estoque *</label>
                 <input type="number" class="form-control nome" name="quantidade" id="quantidade"
                        placeholder="Digite a quantidade..."
                        value="<?php echo isset($produto->id) ? $produto->quantidade : '' ?>"
                        onchange="alterarAquantidade(this.value)"
                        disabled>
+            </div>
+        </div>
+    </div><!--end row-->
+    <hr>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="imagem">Escolher Imagem do Produto</label>
+                <input type="file" class="form-control" name="imagem" id="imagem"> <br>
+                <img src="" class="imagem-produto" id="thumb" style="display:none">
+                <?php if (isset($produto->id) && ! is_null($produto->imagem)): ?>
+                    <img src="<?php echo $produto->imagem; ?>" class="imagem-produto _padrao">
+                <?php else: ?>
+                    <i class="fas fa-box-open _padrao" style="font-size:40px"></i>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -124,19 +172,6 @@
                 </div>
             </div>
         <?php //} ?>
-
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="imagem">Escolher Imagem do Produto</label>
-                <input type="file" class="form-control" name="imagem" id="imagem"> <br>
-                <img src="" class="imagem-produto" id="thumb" style="display:none">
-                <?php if (isset($produto->id) && ! is_null($produto->imagem)): ?>
-                    <img src="<?php echo BASEURL . '/' . $produto->imagem; ?>" class="imagem-produto _padrao">
-                <?php else: ?>
-                    <i class="fas fa-box-open _padrao" style="font-size:40px"></i>
-                <?php endif; ?>
-            </div>
-        </div>
 
         <div class="col-md-12">
             <div class="form-group">

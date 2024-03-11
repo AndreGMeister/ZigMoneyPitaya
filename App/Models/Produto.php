@@ -14,6 +14,15 @@ class Produto extends Model
         parent::__construct();
     }
 
+    public function unidades()
+    {
+        return [
+            'unidade' => 'Unidade',
+            'caixa' => 'Caixa',
+            //'kg' => 'Quilograma (kg)',
+        ];
+    }
+
     public function produtos($idEmpresa, $nome = false, $mostrarEmVendas = 1)
     {
         $querypesquisaPorNome = false;

@@ -125,6 +125,10 @@ use System\HtmlComponents\Modal\Modal;
             modalValidacao('Validação', 'Campo (Nome) deve ser preenchido!');
             return false;
 
+        } else if ($('#unidade').val() == 'selecione') {
+            modalValidacao('Validação', 'O produto será vendido em <br> Unidade ou Caixa? <br> Selecione uma opção no campo (Unidade)!<br>');
+            return false;
+
         } else if ($('#preco_compra').val() == '') {
             modalValidacao('Validação', 'Campo (Preço de Compra) deve ser preenchido!');
             return false;

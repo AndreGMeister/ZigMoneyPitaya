@@ -78,7 +78,7 @@
                                         <i class="fas fa-edit"></i> Editar
                                     </button>
 
-                                    <a class="dropdown-item" href="<?php //echo BASEURL; ?>/cliente/relatorios-de-vendas/<?php echo in64($cliente->id); ?>">
+                                    <a class="dropdown-item" href="<?php echo BASEURL; ?>/cliente/relatorios-de-vendas/<?php echo in64($cliente->id); ?>">
                                         <i class="fas fa-chart-line"></i> Relatório de Vendas
                                     </a>
                                         

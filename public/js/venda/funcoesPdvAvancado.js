@@ -75,6 +75,12 @@ function obterOultimoProdutoColocadoNaMesa() {
             t += "<td>" + value.produto + "</td>";
             t += "<td class='hidden-when-mobile'>" + real(value.preco) + "</td>";
             t += "<td>" + '<input type="number" class="campo-quantidade" value="' + value.quantidade + '" onchange="alterarAquantidadeDeUmProdutoNaMesa(' + value.id + ', this.value, $(this))">' + "</td>";
+            
+            /*if (value.unidade == 'kg') {
+            
+                t += "<td>" +'<input-mask alias="numeric" suffix=" kg" digits="2" radixPoint="."></input-mask>'+ "</td>";
+            }*/
+            
             t += "<td>" + real(value.total) + "</td>";
             t += "<td>" + '<button class="btn-sm btn-link" onclick="retirarProdutoDaMesa(' + value.id + ', this)"><i class="fas fa-times" style="color:#cc0000;font-size:18px"></i></button>' + "</td>";
             t += "</tr>";

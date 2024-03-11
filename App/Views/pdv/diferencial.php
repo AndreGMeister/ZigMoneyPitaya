@@ -401,6 +401,7 @@
 
 <script src="<?php echo BASEURL; ?>/public/assets/js/core/jquery.min.js"></script>
 <script defer src="<?php echo BASEURL; ?>/public/js/helpers.js"></script>
+<script src="<?php echo BASEURL; ?>/public/js/maskedInput.js"></script>
 <script defer src="<?php echo BASEURL; ?>/public/js/venda/funcoesPdvAvancado.js"></script>
 
 <script>
@@ -509,4 +510,7 @@
             }
         });
     }
+
+    
+    
 </script>

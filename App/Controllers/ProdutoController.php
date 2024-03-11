@@ -44,7 +44,8 @@ class ProdutoController extends Controller
 
         $dados['id_empresa'] = $this->idEmpresa;
         $dados['preco'] = formataValorMoedaParaGravacao($dados['preco']);
-
+        #$dados['preco_custo'] = formataValorMoedaParaGravacao($dados['preco_custo']);
+        
         if (isset($dados['mostrar_em_vendas'])) {
             $dados['mostrar_em_vendas'] = 1;
         } else {
@@ -82,7 +83,7 @@ class ProdutoController extends Controller
         $dadosProduto = $produto->find($this->post->data()->id);
 
         $dados = (array)$this->post->only([
-            'nome', 'preco', 'descricao'
+            'nome', 'preco', 'unidade', 'descricao'
         ]);
 
         if (isset($dados['descricao'])) {
@@ -100,6 +101,7 @@ class ProdutoController extends Controller
         $dados['quantidade'] = isset($this->post->data()->quantidade) ? $this->post->data()->quantidade : $dadosProduto->quantidade;
 
         $dados['preco'] = formataValorMoedaParaGravacao($dados['preco']);
+        #$dados['preco_custo'] = formataValorMoedaParaGravacao($dados['preco_custo']);
         $dados['imagem'] = (!is_null(uploadBase64Image('imagem')) ? uploadBase64Image('imagem') : $dadosProduto->imagem);
 
         try {
@@ -119,8 +121,9 @@ class ProdutoController extends Controller
             $produto = new Produto();
             $produto = $produto->find($idProduto);
         }
-
-        $this->view('produto/formulario', null, compact('produto'));
+        
+        $unidades = (new Produto())->unidades();
+        $this->view('produto/formulario', null, compact('produto', 'unidades'));
     }
 
     public function pesquisarProdutoPorNome($nome = false)

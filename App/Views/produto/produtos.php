@@ -4,8 +4,9 @@
         <tr>
             <th>#</th>
             <th>Nome</th>
-            <th>R$ Preço</th>
-            <th>Em vendas</th>
+            <!--<th>R$ Custo</th>-->
+            <th>R$ Venda</th>
+            <th>Unidade</th>
             <th>Quantidade</th>
             <th style="text-align:right;padding-right:0">
                 <?php $rota = BASEURL . '/produto/modalFormulario'; ?>
@@ -33,13 +34,10 @@
                 </td>
 
                 <td><?php echo $produto->nome; ?></td>
+                <!--<td><?php //echo ($produto->preco_custo != '0.00') ? real($produto->preco_custo) : '<small>Nāo informado</small>'; ?></td>-->
                 <td><?php echo real($produto->preco); ?></td>
-                <?php if ($produto->mostrar_em_vendas == true):?>
-                    <td><small>Sim</small></td>
-                <?php else:?>
-                    <td class="with_deleted_at"><Small>Não</Small></td>
-                <?php endif;?>
-
+                
+                <td><?php echo ($produto->unidade == null) ? '<small>Nāo informado</small>' : ucfirst($produto->unidade);?></td>
                 <td>
                     <?php if ($produto->ativar_quantidade):?>
                         <?php echo $produto->quantidade;?>
