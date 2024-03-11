@@ -167,6 +167,12 @@
     #modalClienteNaVenda .close {
         display: none!important
     }
+
+    .unidade {
+        font-size: 10px;
+        color: #999999;
+        padding:1px;
+    }
 </style>
 
 <div class="row">

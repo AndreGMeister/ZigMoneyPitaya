@@ -25,6 +25,12 @@
                 <?php endif; ?>
 
                 <center>
+                    <b class="unidade">
+                        <?php echo ($produto->unidade !== '') ? ucfirst($produto->unidade) : '';?>
+                    </b>
+                </center>
+
+                <center>
                     <span class="produto-titulo"><?php echo stringAbreviation(mb_strtoupper($produto->nome), 40, '...'); ?></span>
                 </center>
                 <center><span class="produto-valor">R$ <?php echo real($produto->preco); ?></span></center>
