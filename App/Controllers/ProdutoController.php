@@ -159,4 +159,19 @@ class ProdutoController extends Controller
             dd($e->getMessage());
         }
     }
+
+    public function testing()
+    {
+        $produto = new Produto();
+        $produtos = $produto->produtos(19);
+
+        foreach ($produtos as $key => $_produto) {
+            $base64Image = explode(',', $_produto->imagem)[1];
+            $imagemDecodificada = base64_decode($base64Image);
+
+            // Salvar a imagem como um arquivo JPEG
+            $caminhoArquivo = 'public/produtos/imagem_' . $_produto->id . '.jpeg';
+            file_put_contents($caminhoArquivo, $imagemDecodificada);
+        }
+    }
 }

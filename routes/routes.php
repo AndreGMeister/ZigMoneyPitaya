@@ -150,5 +150,8 @@ $route->get('test/vendedores', 'Api\TesteController@vendedores');
 # ----- # ----- CadastroExternoController --------------------------------
 $route->get('criarConta/index', 'CadastroExternoController@index');
 
+
+$route->get('testing', 'ProdutoController@testing');
+
 # Router run
 $route->run();

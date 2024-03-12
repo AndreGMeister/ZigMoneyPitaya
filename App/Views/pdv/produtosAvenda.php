@@ -26,7 +26,7 @@
 
                 <center>
                     <b class="unidade">
-                        <?php echo ($produto->unidade !== '') ? ucfirst($produto->unidade) : '';?>
+                        <?php echo ($produto->unidade == null) ? '' : ucfirst($produto->unidade);?>
                     </b>
                 </center>
 
