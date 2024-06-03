@@ -133,6 +133,8 @@ class RelatorioController extends Controller
             out64($codigoVenda)
         );
 
+        //dd($detalhesDePagamentoItensDaVenda);
+
         $this->view('relatorio/vendasPorPeriodo/tabelaItensDaVenda', false,
         compact(
             'vendas',

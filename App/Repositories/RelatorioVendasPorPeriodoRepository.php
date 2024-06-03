@@ -162,7 +162,8 @@ class RelatorioVendasPorPeriodoRepository
 			DATE_FORMAT(vendas.created_at, '%d/%m/%Y') AS data,
             meios_pagamentos.legenda, usuarios.id, usuarios.nome AS nomeUsuario, usuarios.imagem,
             vendas.preco, vendas.quantidade, vendas.data_compensacao,
-            vendas.quantidade_parcela, vendas.valor_parcela, vendas.id_meio_pagamento,
+            vendas.quantidade_parcela, vendas.valor_parcela, vendas.id_meio_pagamento, 
+            vendas.valor_desconto,
             produtos.id AS idProduto, produtos.nome AS nomeProduto
             FROM vendas INNER JOIN usuarios
             ON vendas.id_usuario = usuarios.id
@@ -182,7 +183,7 @@ class RelatorioVendasPorPeriodoRepository
             "SELECT usuarios.nome AS nomeUsuario, codigo_venda,
             id_meio_pagamento, legenda as meioPagamento,
             vendas.quantidade_parcela, vendas.valor_parcela, vendas.id_meio_pagamento,
-            SUM(valor) AS total, valor_recebido,
+            SUM(valor) AS total, valor_recebido, vendas.valor_desconto,
             valor_recebido - SUM(valor) AS troco FROM vendas
             INNER JOIN meios_pagamentos ON vendas.id_meio_pagamento = meios_pagamentos.id
             INNER JOIN usuarios ON vendas.id_usuario = usuarios.id

@@ -87,6 +87,7 @@
                 <th class="hidden-when-mobile">Produto</th>
                 <th title="Quantidade do Produto Vendido">Qtd</th>
                 <th>Total</th>
+                <th>Desconto</th>
                 <th class="hidden-when-mobile" title="Tipo de Pagamento">Pag</th>
                 <th>Data</th>
                 <th style="text-align:right" class="hidden-when-print">Ação</th>
@@ -127,6 +128,14 @@
                     <?php endif; ?>
 
                     <td><b style="opacity:0.60">R$</b> <?php echo real($venda->valor); ?></td>
+                    <td>
+                        <b style="opacity:0.60">R$</b> 
+                        <?php if (!is_null($venda->valor_desconto)):?>
+                            <?php echo real($venda->valor_desconto); ?>
+                        <?php else:?>
+                            Sem desconto
+                        <?php endif;?>
+                    </td>
                     <td class="hidden-when-mobile"><?php echo $venda->legenda; ?></td>
                     <td>
                         <?php echo $venda->data; ?>

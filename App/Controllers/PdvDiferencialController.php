@@ -105,9 +105,11 @@ class PdvDiferencialController extends Controller
                 $dadoProduto->data_fim_desconto
             );
             
+            $sedesconto = false;
             # Se o produto tiver desconto e estiver dentro do periodo de desconto
             if (!is_null($dadoProduto->valor_desconto) && $descontoEstadentroDoPeriodo) {
                 $produto['preco'] = $dadoProduto->preco - $dadoProduto->valor_desconto;
+                $sedesconto = true;
             }
 
             $dados = [
@@ -121,9 +123,12 @@ class PdvDiferencialController extends Controller
                 'codigo_venda' => $codigoVenda,
                 'id_meio_pagamento' => $this->post->data()->id_meio_pagamento,
                 'quantidade_parcela' => $parcelas,
-                'valor_parcela' => $valorParcela,
-                'valor_desconto' => $dadoProduto->valor_desconto,
+                'valor_parcela' => $valorParcela
             ];
+
+            if ($sedesconto) {
+                $dados['valor_desconto'] = $dadoProduto->valor_desconto;
+            }
 
             if (isset($_SESSION['cliente']['id_cliente'])) {
                 $dados['id_cliente'] = $_SESSION['cliente']['id_cliente'];
@@ -134,13 +139,17 @@ class PdvDiferencialController extends Controller
                 $dados['troco'] = $troco;
             }
 
+           // dd($dados);
+
             $venda = new Venda();
             try {
                 $venda = $venda->save($dados);
-                $status = true;
-
-                $produto = new Produto();
-                $produto->decrementaQuantidadeProduto((int) $dados['id_produto'], (int) $dados['quantidade']);
+                
+                if ($venda) {
+                    $produto = new Produto();
+                    $produto->decrementaQuantidadeProduto((int) $dados['id_produto'], (int) $dados['quantidade']);
+                    $status = true;
+                }
 
                 unset($_SESSION['venda']);
                 unset($_SESSION['cliente']);
