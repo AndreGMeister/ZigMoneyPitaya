@@ -96,6 +96,20 @@ class PdvDiferencialController extends Controller
         $troco = formataValorMoedaParaGravacao($this->post->data()->troco);
 
         foreach ($_SESSION['venda'] as $produto) {
+            $modelProduto = new Produto();
+            $dadoProduto = $modelProduto->find($produto['id']);
+            
+            # Verifica se o produto tem desconto e se está dentro do periodo de desconto
+            $descontoEstadentroDoPeriodo = $modelProduto->descontoEstadentroDoPeriodo(
+                $dadoProduto->data_inicio_desconto, 
+                $dadoProduto->data_fim_desconto
+            );
+            
+            # Se o produto tiver desconto e estiver dentro do periodo de desconto
+            if (!is_null($dadoProduto->valor_desconto) && $descontoEstadentroDoPeriodo) {
+                $produto['preco'] = $dadoProduto->preco - $dadoProduto->valor_desconto;
+            }
+
             $dados = [
                 'id_usuario' => $this->idUsuario,
                 'data_compensacao' => $dataCompensacao,
@@ -108,6 +122,7 @@ class PdvDiferencialController extends Controller
                 'id_meio_pagamento' => $this->post->data()->id_meio_pagamento,
                 'quantidade_parcela' => $parcelas,
                 'valor_parcela' => $valorParcela,
+                'valor_desconto' => $dadoProduto->valor_desconto,
             ];
 
             if (isset($_SESSION['cliente']['id_cliente'])) {

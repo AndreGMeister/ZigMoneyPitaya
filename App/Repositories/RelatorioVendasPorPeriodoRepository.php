@@ -136,7 +136,7 @@ class RelatorioVendasPorPeriodoRepository
             vendas.codigo_venda AS codigoVenda,
 			DATE_FORMAT(vendas.created_at, '%d/%m/%Y') AS data,
             meios_pagamentos.legenda, usuarios.id, usuarios.nome AS nomeUsuario, usuarios.imagem,
-            vendas.preco, vendas.quantidade, vendas.data_compensacao,
+            vendas.preco, vendas.quantidade, vendas.data_compensacao, vendas.valor_desconto,
             vendas.quantidade_parcela, vendas.valor_parcela, vendas.id_meio_pagamento,
             vendas.id_cliente, clientes.nome AS nomeCliente
             FROM vendas INNER JOIN usuarios

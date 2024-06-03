@@ -11,7 +11,6 @@
         margin-right: 10px !important;
         opacity:0.60;
     }
-
 </style>
 <div class="row div-inter-produtos">
     <?php if (count($produtos) > 0):?>
