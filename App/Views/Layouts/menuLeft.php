@@ -2,19 +2,20 @@
 
 use App\Config\ConfigPerfil;
 use System\Session\Session;
-
 ?>
 
 <div class="sidebar-wrapper">
     <ul class="nav">
-
-        <li class="">
-            <a href="<?php echo BASEURL; ?>/home"
-               class="<?php currentRouteFromMenu('home', 'inicioBorder'); ?>">
-                <i class="fas fa-tachometer-alt"></i>
-                <p>Inicio</p>
-            </a>
-        </li>
+       
+        <?php if (Session::get('idPerfil') != ConfigPerfil::vendedor()): ?>
+            <li class="">
+                <a href="<?php echo BASEURL; ?>/home"
+                class="<?php currentRouteFromMenu('home', 'inicioBorder'); ?>">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <p>Inicio</p>
+                </a>
+            </li>
+        <?php endif; ?>
 
         <!--Modulo PDV Padrão e Diferencial-->
         <li class="">
@@ -53,6 +54,14 @@ use System\Session\Session;
                 <p>Clientes</p>
             </a>
         </li>
+
+        <!--<li class="">
+            <a href="<?php //echo BASEURL; ?>/contasAreceber"
+               class="<?php ///currentRouteFromMenu('contasAreceber', 'contasAreceberBorder'); ?>">
+                <i class="fas fa-handshake"></i>
+                <p>Contas a receber</p>
+            </a>
+        </li>-->
 
 
         <!--<li class="">

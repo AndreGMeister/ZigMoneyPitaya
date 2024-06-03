@@ -106,7 +106,11 @@ class VendasRepository
                 SELECT SUM(vendas.valor) AS total FROM vendas WHERE id_meio_pagamento = 5
                 AND id_usuario = usuarios.id AND DATE_FORMAT(vendas.created_at, '%m') = {$mes}
                 AND vendas.deleted_at IS NULL
-            ) AS Pix
+            ) AS Pix, (
+                SELECT SUM(vendas.valor) AS total FROM vendas WHERE id_meio_pagamento = 6
+                AND id_usuario = usuarios.id AND DATE_FORMAT(vendas.created_at, '%m') = {$mes}
+                AND vendas.deleted_at IS NULL
+            ) AS Prazo
 
             FROM vendas INNER JOIN usuarios ON vendas.id_usuario = usuarios.id
             WHERE vendas.id_empresa = {$idEmpresa} AND vendas.id_empresa = {$idEmpresa} AND

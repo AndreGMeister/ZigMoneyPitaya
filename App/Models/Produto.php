@@ -46,17 +46,25 @@ class Produto extends Model
         }
 
         return $this->query(
-            "SELECT p.*, COUNT(v.id_produto) as total_vendas
-            FROM produtos p
-            LEFT JOIN vendas v ON p.id = v.id_produto
-            WHERE p.id_empresa = {$idEmpresa}
-            AND p.deleted_at IS NULL
-            AND p.mostrar_em_vendas = 1
-            {$querypesquisaPorNome}
-            GROUP BY p.id
-            ORDER BY total_vendas DESC"
+            "SELECT p.*, 
+                    COUNT(v.id_produto) as total_vendas,
+                    CASE 
+                        WHEN p.valor_desconto IS NOT NULL 
+                             AND p.data_inicio_desconto <= NOW() 
+                             AND p.data_fim_desconto >= NOW() 
+                        THEN 1 
+                        ELSE 0 
+                    END as desconto_ativo
+             FROM produtos p
+             LEFT JOIN vendas v ON p.id = v.id_produto
+             WHERE p.id_empresa = {$idEmpresa}
+               AND p.deleted_at IS NULL
+               AND p.mostrar_em_vendas = 1
+               {$querypesquisaPorNome}
+             GROUP BY p.id
+             ORDER BY total_vendas DESC"
         );
-
+        
         /*"SELECT * FROM produtos WHERE id_empresa = {$idEmpresa}
         AND deleted_at IS NULL AND mostrar_em_vendas = 1 {$querypesquisaPorNome}"*/
     }
@@ -135,5 +143,14 @@ class Produto extends Model
             $quantidadeDecrementada = $produto->quantidade - $quantidadeVendida;
             $this->update(['quantidade' => $quantidadeDecrementada], $idProduto);
         }
+    }
+    
+    /**
+     * Verifica se o produto está com desconto
+     */
+    public function descontoEstadentroDoPeriodo($dataInicioDesconto, $dataFimDesconto)
+    {
+        $dataAtual = date('Y-m-d H:i:s');
+        return ($dataAtual >= $dataInicioDesconto && $dataAtual <= $dataFimDesconto);
     }
 }

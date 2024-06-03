@@ -61,6 +61,11 @@
                     <img src="<?php echo BASEURL;?>/public/img/pix.png" alt="" width="30" class="meio-pagamento-icons">
 				    <?php echo $tipo->legenda; ?> R$ <?php echo real($tipo->totalVendas); ?>
 				 </span>
+            <?php elseif ($tipo->idMeioPagamento == 6): ?>
+                <span class="badge" style="ackground:#73b1a2;padding:5px">
+                    <img src="<?php echo BASEURL;?>/public/img/prazo.png" alt="" width="30" class="meio-pagamento-icons">
+				    <?php echo $tipo->legenda; ?> R$ <?php echo real($tipo->totalVendas); ?>
+				 </span>
             <?php endif; ?>
         <?php endforeach; ?>
     </div>

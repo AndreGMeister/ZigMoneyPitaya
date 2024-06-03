@@ -22,8 +22,23 @@ class VendasEmSessaoRepository
                     $quantidade = 1;
                 }
 
-                $produto = new Produto();
-                $produto = $produto->find($idProduto);
+                $modelProduto = new Produto();
+                $produto = $modelProduto->find($idProduto);
+
+                $total = 0;
+                $descontoEstadentroDoPeriodo = $modelProduto->descontoEstadentroDoPeriodo(
+                    $produto->data_inicio_desconto,
+                    $produto->data_fim_desconto
+                );
+                
+                # Desconto ativo
+                if (!is_null($produto->valor_desconto) && $descontoEstadentroDoPeriodo) {
+                    # Calcula com desconto
+                    $total = (float) $produto->preco - (float) $produto->valor_desconto;
+                } else {
+                    # Calcula sem desconto
+                    $total = (float) $produto->preco * (float) $quantidade;
+                }
 
                 $_SESSION['venda'][$idProduto] = [
                     'id' => $idProduto,
@@ -31,8 +46,10 @@ class VendasEmSessaoRepository
                     'preco' => $produto->preco,
                     'imagem' => $produto->imagem,
                     'quantidade' => $quantidade,
-                    'total' => (float)$produto->preco * (float)$quantidade,
-                    'unidade' => $produto->unidade
+                    'total' => $total,
+                    'unidade' => $produto->unidade,
+                    'comDesconto' => $descontoEstadentroDoPeriodo,
+                    'valorDesconto' => $produto->valor_desconto
                 ];
            }
         }

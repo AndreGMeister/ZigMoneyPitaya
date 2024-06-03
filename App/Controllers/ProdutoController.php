@@ -102,6 +102,16 @@ class ProdutoController extends Controller
 
         $dados['preco'] = formataValorMoedaParaGravacao($dados['preco']);
         #$dados['preco_custo'] = formataValorMoedaParaGravacao($dados['preco_custo']);
+
+        $dados['valor_desconto'] = isset($this->post->data()->valor_desconto) ? formataValorMoedaParaGravacao($this->post->data()->valor_desconto) : $dadosProduto->valor_desconto;
+        if (isset($this->post->data()->data_inicio_desconto)) {
+            $dados['data_inicio_desconto'] = dateFormat($this->post->data()->data_inicio_desconto) . ' 00:00:00';
+        }
+        
+        if (isset($this->post->data()->data_fim_desconto)) {
+            $dados['data_fim_desconto'] = dateFormat($this->post->data()->data_fim_desconto) . ' 23:59:59';
+        }
+       
         $dados['imagem'] = (!is_null(uploadBase64Image('imagem')) ? uploadBase64Image('imagem') : $dadosProduto->imagem);
 
         try {
@@ -163,7 +173,7 @@ class ProdutoController extends Controller
     public function testing()
     {
         $produto = new Produto();
-        $produtos = $produto->produtos(19);
+        $produtos = $produto->produtos(1);
 
         foreach ($produtos as $key => $_produto) {
             $base64Image = explode(',', $_produto->imagem)[1];
@@ -171,6 +181,10 @@ class ProdutoController extends Controller
 
             // Salvar a imagem como um arquivo JPEG
             $caminhoArquivo = 'public/produtos/imagem_' . $_produto->id . '.jpeg';
+            
+            $produto = new Produto();
+            $produto->update(['url_imagem' => $caminhoArquivo], $_produto->id);
+
             file_put_contents($caminhoArquivo, $imagemDecodificada);
         }
     }

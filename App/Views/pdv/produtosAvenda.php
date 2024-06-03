@@ -5,6 +5,13 @@
     .estoque_esgotado img {
         filter: grayscale(100%);
     }
+    .preco-antigo {
+        text-decoration: line-through!important;
+        color: red!important; 
+        margin-right: 10px !important;
+        opacity:0.60;
+    }
+
 </style>
 <div class="row div-inter-produtos">
     <?php if (count($produtos) > 0):?>
@@ -33,7 +40,14 @@
                 <center>
                     <span class="produto-titulo"><?php echo stringAbreviation(mb_strtoupper($produto->nome), 40, '...'); ?></span>
                 </center>
-                <center><span class="produto-valor">R$ <?php echo real($produto->preco); ?></span></center>
+                <center>
+                    <?php if ($produto->desconto_ativo):?>
+                        <span class="produto-valor preco-antigo">R$ <?php echo real($produto->preco); ?></span> <br>
+                        <span class="produto-valor">R$ <?php echo real($produto->preco - $produto->valor_desconto); ?></span>
+                    <?php else:?>
+                        <span class="produto-valor">R$ <?php echo real($produto->preco); ?></span>
+                    <?php endif;?>
+                </center>
 
                 <?php if ($produto->ativar_quantidade):?>
                     <center>

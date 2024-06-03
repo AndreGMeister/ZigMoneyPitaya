@@ -12,6 +12,7 @@ use System\Controller\Controller;
 use System\Get\Get;
 use System\Post\Post;
 use System\Session\Session;
+use App\Config\ConfigPerfil;
 
 class LoginController extends Controller
 {
@@ -77,6 +78,11 @@ class LoginController extends Controller
 
             if ($mustRememberLogin) {
                 $this->handleRememberUser($dadosUsuario);
+            }
+            
+            # Se for o perfil de vendedor, redireciona para a tela de PDV Diferencial
+            if ($dadosUsuario->id_perfil == ConfigPerfil::vendedor()) {
+                return $this->get->redirectTo("pdvDiferencial");
             }
 
             return $this->get->redirectTo("home");

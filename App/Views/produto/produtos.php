@@ -8,6 +8,7 @@
             <th>R$ Venda</th>
             <th>Unidade</th>
             <th>Quantidade</th>
+            <th>R$ Desconto</th>
             <th style="text-align:right;padding-right:0">
                 <?php $rota = BASEURL . '/produto/modalFormulario'; ?>
                 <button onclick="modalFormularioProdutos('<?php echo $rota; ?>', false);"
@@ -45,6 +46,14 @@
                     <?php else:?>
                         <small>Desabilitado</small>
                     <?php endif;?>
+                </td>
+
+                <td>
+                    <?php if (!is_null($produto->valor_desconto)): ?>
+                        R$ <?php echo real($produto->valor_desconto); ?>
+                    <?php else: ?>
+                        <small>Sem desconto</small>
+                    <?php endif; ?>
                 </td>
 
                 <td style="text-align:right">

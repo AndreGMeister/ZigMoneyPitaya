@@ -6,6 +6,7 @@ use App\Models\Cliente;
 use App\Models\Produto;
 use App\Repositories\VendasRepository;
 use App\Rules\Logged;
+use App\Rules\PerfilVendedor;
 use System\Controller\Controller;
 use System\Get\Get;
 use System\Post\Post;
@@ -35,6 +36,10 @@ class HomeController extends Controller
 
         $logged = new Logged();
         $logged->isValid();
+        
+        # Se o perfil do usuário logado for vendedor, redireciona para a rota pdvDiferencial
+        $perfilVendedor = new PerfilVendedor();
+        $perfilVendedor->notAllowed();
     }
 
     public function index()

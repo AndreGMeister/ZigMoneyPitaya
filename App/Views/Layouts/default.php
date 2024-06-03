@@ -301,6 +301,7 @@ $configPdv = $configPdv->configPdv(Session::get('idEmpresa'));
         jQuery(function ($) {
             jQuery(".cnpj_mask").mask("99.999.999/9999-99");
             jQuery(".cpf_mask").mask("999.999.999-99");
+            jQuery(".data_mask").mask("99/99/9999");
         });
     });
 </script>

@@ -144,6 +144,39 @@
             </div>
         </div>
     </div><!--end row-->
+    
+    <hr>
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="valor_desconto">R$ Valor do desconto</label>
+                <input type="text" class="form-control campo-moeda" name="valor_desconto" id="valor_desconto" placeholder="00,00"
+                value="<?php echo isset($produto->valor_desconto) ? real($produto->valor_desconto) : '' ?>">
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="data_inicio_desconto">Data Inicio desconto</label>
+                <input type="text" class="form-control data_mask" name="data_inicio_desconto" id="data_inicio_desconto"
+                value="<?php echo isset($produto->data_inicio_desconto) ? date('d/m/Y', strtotime($produto->data_inicio_desconto)): '' ?>">
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="data_fim_desconto">Data Fim desconto</label>
+                <input type="text" class="form-control data_mask" name="data_fim_desconto" id="data_fim_desconto"
+                value="<?php echo isset($produto->data_fim_desconto) ? date('d/m/Y', strtotime($produto->data_fim_desconto)): '' ?>">
+            </div>
+        </div>
+    </div><!--end row-->
+
+
+
+
+
     <hr>
     <div class="row">
         <div class="col-md-4">
@@ -233,6 +266,10 @@
                 thousands: '.', decimal: ',',
                 affixesStay: false
             });
+    });
+
+    jQuery(function ($) {
+        jQuery(".data_mask").mask("99/99/9999");
     });
 
     $("#ativo").click(function() {

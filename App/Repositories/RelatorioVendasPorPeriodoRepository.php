@@ -149,7 +149,7 @@ class RelatorioVendasPorPeriodoRepository
             AND vendas.deleted_at IS NULL
             GROUP BY vendas.codigo_venda
             ORDER BY vendas.created_at DESC");
-    
+  
         return $query;
     }
 

@@ -106,6 +106,10 @@ $route->get('clienteEndereco/buscarEnderecoViaCep/{cep?}', 'ClienteEnderecoContr
 $route->get('clienteEndereco/modalVisualizarEnderecos/{idCliente}',
     'ClienteEnderecoController@modalVisualizarEnderecos');
 
+# ----- ContasAreceberController --------------------------------
+$route->get('contasAreceber', 'ContasAreceberController@index');
+$route->get('contasAreceber/cliente/{idCliente}', 'ContasAreceberController@cliente');
+
 # ----- PedidoController --------------------------------
 $route->get('pedido', 'PedidoController@index');
 $route->get('pedido/modalFormulario/{idPedido?}', 'PedidoController@modalFormulario');

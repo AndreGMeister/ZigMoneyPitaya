@@ -271,6 +271,7 @@
                             <th><img src="<?php echo BASEURL;?>/public/img/debit-card.png" alt="" width="20" class="meio-pagamento-icons"> Débito</th>
                             <th><img src="<?php echo BASEURL;?>/public/img/boleto.png" alt="" width="20" class="meio-pagamento-icons"> Boleto</th>
                             <th><img src="<?php echo BASEURL;?>/public/img/pix.png" alt="" width="20" class="meio-pagamento-icons"> Pix</th>
+                            <th><img src="<?php echo BASEURL;?>/public/img/prazo.png" alt="" width="20" class="meio-pagamento-icons"> A PRAZO</th>
                         </tr>
                         </thead>
                         <tbody class="tbody-totalVendasPorUsuariosNoMes">
@@ -312,6 +313,12 @@
 
                                 <?php if (!is_null($venda->Pix)): ?>
                                     <td>R$ <?php echo real($venda->Pix); ?></td>
+                                <?php else: ?>
+                                    <td><small>Não consta</small></td>
+                                <?php endif; ?>
+
+                                <?php if (!is_null($venda->Prazo)): ?>
+                                    <td style="color:red">R$ -<?php echo real($venda->Prazo); ?></td>
                                 <?php else: ?>
                                     <td><small>Não consta</small></td>
                                 <?php endif; ?>
@@ -457,7 +464,7 @@
     'grafico-tipo-pagamento',
     $percentualMeiosDePagamento->medias,
     $percentualMeiosDePagamento->legendas,
-    ["#a0d2ae", "#98c0d5", "#dbb4dc", "#d0b9ae", "#73b1a2"]
+    ["#a0d2ae", "#98c0d5", "#dbb4dc", "#d0b9ae", "#73b1a2", "red"]
 ); ?>
 <script>
     /*$(".vendas_por_vendedores tbody td").each(function() {
