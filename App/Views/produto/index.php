@@ -140,7 +140,32 @@ use System\HtmlComponents\Modal\Modal;
         } else if ($("#ativar_quantidade").is(':checked') && $("#quantidade").val() == '') {
             modalValidacao('Validação', 'Campo (Quantidade) deve ser preenchido!');
             return false;
-        }
+
+        } else if ($("#em_desconto").is(':checked') && $('#valor_desconto').val() == '') {
+            modalValidacao('Validação', 'A opção de desconto está habilitada. Campo (Valor do Desconto) deve ser preenchido!');
+            return false;
+
+        } else if ($("#em_desconto").is(':checked') && $('#data_inicio_desconto').val() == '') {
+            modalValidacao('Validação', 'A opção de desconto está habilitada. Campo (Data Início do Desconto) deve ser preenchido!');
+            return false;
+
+        } else if ($("#em_desconto").is(':checked') && $('#data_fim_desconto').val() == '') {
+            modalValidacao('Validação', 'A opção de desconto está habilitada. Campo (Data Fim do Desconto) deve ser preenchido!');
+            return false;
+
+        } else if ($("#em_desconto").is(':checked') && $('#data_inicio_desconto').val() > $('#data_fim_desconto').val()) {
+            modalValidacao('Validação', 'A data de início do desconto não pode ser maior que a data de término do desconto!');
+            return false;
+
+        } else if ($("#em_desconto").is(':checked')) {
+            const valorDesconto = parseCurrency($('#valor_desconto').val());
+            const preco = parseCurrency($('#preco').val());
+            
+            if (valorDesconto > preco) {
+                modalValidacao('Validação', 'O valor do desconto não pode ser maior que o preço do produto!');
+                return false;
+            }
+        } 
 
         return true;
     }

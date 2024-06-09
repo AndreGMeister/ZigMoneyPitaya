@@ -232,3 +232,9 @@ function verificaExtensaoArquivo(arquivo) {
     }
     return true;
 }
+
+// Função para remover a formatação de moeda e converter para número
+function parseCurrency(value) {
+    // Remove pontos de milhar e substitui vírgula decimal por ponto
+    return parseFloat(value.replace(/\./g, '').replace(',', '.'));
+}

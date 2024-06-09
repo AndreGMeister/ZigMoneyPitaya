@@ -175,7 +175,7 @@
         
         <div class="col-md-4">
             <div class="form-group">
-                <label for="valor_desconto">R$ Valor</label>
+                <label for="valor_desconto">R$ Valor *</label>
                 <input type="text" class="form-control campo-moeda" name="valor_desconto" id="valor_desconto" placeholder="00,00"
                 value="<?php echo isset($produto->valor_desconto) ? real($produto->valor_desconto) : '' ?>"
                 disabled>
@@ -184,7 +184,7 @@
         
         <div class="col-md-4">
             <div class="form-group">
-                <label for="data_inicio_desconto">Data inicio</label>
+                <label for="data_inicio_desconto">Data inicio *</label>
                 <input type="text" class="form-control data_mask" name="data_inicio_desconto" id="data_inicio_desconto"
                 value="<?php echo isset($produto->data_inicio_desconto) ? date('d/m/Y', strtotime($produto->data_inicio_desconto)): '' ?>"
                 disabled>
@@ -193,7 +193,7 @@
 
         <div class="col-md-4">
             <div class="form-group">
-                <label for="data_fim_desconto">Data término</label>
+                <label for="data_fim_desconto">Data término *</label>
                 <input type="text" class="form-control data_mask" name="data_fim_desconto" id="data_fim_desconto"
                 value="<?php echo isset($produto->data_fim_desconto) ? date('d/m/Y', strtotime($produto->data_fim_desconto)): '' ?>"
                 disabled>
