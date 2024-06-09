@@ -49,7 +49,7 @@
                 </td>
 
                 <td>
-                    <?php if (!is_null($produto->valor_desconto)): ?>
+                    <?php if ($produto->em_desconto && !is_null($produto->valor_desconto)): ?>
                         R$ <?php echo real($produto->valor_desconto); ?>
                     <?php else: ?>
                         <small>Sem desconto</small>

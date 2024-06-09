@@ -26,15 +26,17 @@ class VendasEmSessaoRepository
                 $produto = $modelProduto->find($idProduto);
 
                 $total = 0;
-                $descontoEstadentroDoPeriodo = $modelProduto->descontoEstadentroDoPeriodo(
-                    $produto->data_inicio_desconto,
-                    $produto->data_fim_desconto
-                );
-                
-                # Desconto ativo
-                if (!is_null($produto->valor_desconto) && $descontoEstadentroDoPeriodo) {
-                    # Calcula com desconto
-                    $total = (float) $produto->preco - (float) $produto->valor_desconto;
+                $seDesconto = false;
+                if ($produto->em_desconto) {
+                    $descontoEstadentroDoPeriodo = $modelProduto->descontoEstadentroDoPeriodo(
+                        $produto->data_inicio_desconto,
+                        $produto->data_fim_desconto
+                    );
+
+                    if (!is_null($produto->valor_desconto) && $descontoEstadentroDoPeriodo) {
+                        $total = (float) $produto->preco - (float) $produto->valor_desconto;
+                        $seDesconto = true;
+                    }
                 } else {
                     # Calcula sem desconto
                     $total = (float) $produto->preco * (float) $quantidade;
@@ -43,12 +45,12 @@ class VendasEmSessaoRepository
                 $_SESSION['venda'][$idProduto] = [
                     'id' => $idProduto,
                     'produto' => $produto->nome,
-                    'preco' => $produto->preco,
-                    'imagem' => $produto->imagem,
+                    'preco' => $seDesconto ? $total : $produto->preco,
+                    //'imagem' => $produto->imagem,
                     'quantidade' => $quantidade,
                     'total' => $total,
                     'unidade' => $produto->unidade,
-                    'comDesconto' => $descontoEstadentroDoPeriodo,
+                    'comDesconto' => $seDesconto,
                     'valorDesconto' => $produto->valor_desconto
                 ];
            }

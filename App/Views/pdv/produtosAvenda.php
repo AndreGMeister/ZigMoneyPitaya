@@ -40,7 +40,7 @@
                     <span class="produto-titulo"><?php echo stringAbreviation(mb_strtoupper($produto->nome), 40, '...'); ?></span>
                 </center>
                 <center>
-                    <?php if ($produto->desconto_ativo):?>
+                    <?php if ($produto->em_desconto && $produto->desconto_ativo):?>
                         <span class="produto-valor preco-antigo">R$ <?php echo real($produto->preco); ?></span> <br>
                         <span class="produto-valor">R$ <?php echo real($produto->preco - $produto->valor_desconto); ?></span>
                     <?php else:?>

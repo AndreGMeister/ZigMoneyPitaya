@@ -18,6 +18,11 @@
     .quantidade-desablitado {
         opacity:0.50;
     }
+    .div-campo-desconto {
+        border:1px solid #EEEEEE;
+        padding-bottom:10px;
+        background:#F1F1F1;
+    }
 </style>
 
 <?php if (isset($produto->id) && !empty($produto->codigo)): ?>
@@ -31,8 +36,8 @@
 <?php endif; ?>
 
 <form method="post"
-      action="<?php echo isset($produto->id) ? BASEURL . '/produto/update' : BASEURL . '/produto/save'; ?>"
-      enctype='multipart/form-data'>
+    action="<?php echo isset($produto->id) ? BASEURL . '/produto/update' : BASEURL . '/produto/save'; ?>"
+    enctype='multipart/form-data'>
     <div class="row">
 
         <input type="hidden" name="_token" value="<?php echo TOKEN; ?>"/>
@@ -49,7 +54,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="ativo">
-                            <small style="opacity:0.80">Mostrar este produto em vendas</small>
+                            <small style="opacity:0.80">Mostrar em vendas</small>
                             <input
                                 id="ativo"
                                 name="mostrar_em_vendas"
@@ -66,13 +71,30 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="ativar_quantidade">
-                            <small style="opacity:0.80">Habilitar quantidade deste produto</small>
+                            <small style="opacity:0.80">Habilitar quantidade</small>
                             <input
                                 id="ativar_quantidade"
                                 name="ativar_quantidade"
                                 type="checkbox"
                                 class="form-control"
                                 <?php if (isset($produto->id) && $produto->ativar_quantidade == 1):?>
+                                checked
+                                <?php endif;?>
+                            >
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="em_desconto">
+                            <small style="opacity:0.80">Habilitar desconto</small>
+                            <input
+                                id="em_desconto"
+                                name="em_desconto"
+                                type="checkbox"
+                                class="form-control"
+                                <?php if (isset($produto->id) && $produto->em_desconto):?>
                                 checked
                                 <?php endif;?>
                             >
@@ -87,10 +109,10 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label for="nome">Nome do produto *</label>
+                <label for="nome">Nome *</label>
                 <input type="text" class="form-control nome" name="nome" id="nome"
-                       placeholder="Digite o nome do produto!"
-                       value="<?php echo isset($produto->id) ? $produto->nome : '' ?>">
+                    placeholder="Digite o nome do produto!"
+                    value="<?php echo isset($produto->id) ? $produto->nome : '' ?>">
             </div>
         </div>
 
@@ -102,7 +124,7 @@
                     <?php foreach ($unidades as $key => $unidade) : ?>
                         <?php if (isset($produto->id) &&  $produto->unidade == $key) : ?>
                             <option value="<?php echo $key; ?>"
-                                    selected="selected"><?php echo $unidade; ?>
+                                selected="selected"><?php echo $unidade; ?>
                             </option>
                         <?php else : ?>
                             <option value="<?php echo $key; ?>">
@@ -129,7 +151,7 @@
             <div class="form-group">
                 <label for="preco">R$ Preço de venda *</label>
                 <input type="text" class="form-control campo-moeda" name="preco" id="preco" placeholder="00,00"
-                       value="<?php echo isset($produto->preco) ? real($produto->preco) : '' ?>">
+                    value="<?php echo isset($produto->preco) ? real($produto->preco) : '' ?>">
             </div>
         </div>
 
@@ -137,45 +159,47 @@
             <div class="form-group">
                 <label for="quantidade">Quantidade em estoque *</label>
                 <input type="number" class="form-control nome" name="quantidade" id="quantidade"
-                       placeholder="Digite a quantidade..."
-                       value="<?php echo isset($produto->id) ? $produto->quantidade : '' ?>"
-                       onchange="alterarAquantidade(this.value)"
-                       disabled>
+                    placeholder="Digite a quantidade..."
+                    value="<?php echo isset($produto->id) ? $produto->quantidade : '' ?>"
+                    onchange="alterarAquantidade(this.value)"
+                    disabled>
             </div>
         </div>
     </div><!--end row-->
     
     <hr>
-    <div class="row">
-
+    <div class="row div-campo-desconto quantidade-desablitado">
+        <div class="col-md-12">
+            <h5>Desconto</h5>
+        </div>
+        
         <div class="col-md-4">
             <div class="form-group">
-                <label for="valor_desconto">R$ Valor do desconto</label>
+                <label for="valor_desconto">R$ Valor</label>
                 <input type="text" class="form-control campo-moeda" name="valor_desconto" id="valor_desconto" placeholder="00,00"
-                value="<?php echo isset($produto->valor_desconto) ? real($produto->valor_desconto) : '' ?>">
+                value="<?php echo isset($produto->valor_desconto) ? real($produto->valor_desconto) : '' ?>"
+                disabled>
             </div>
         </div>
         
         <div class="col-md-4">
             <div class="form-group">
-                <label for="data_inicio_desconto">Data Inicio desconto</label>
+                <label for="data_inicio_desconto">Data inicio</label>
                 <input type="text" class="form-control data_mask" name="data_inicio_desconto" id="data_inicio_desconto"
-                value="<?php echo isset($produto->data_inicio_desconto) ? date('d/m/Y', strtotime($produto->data_inicio_desconto)): '' ?>">
+                value="<?php echo isset($produto->data_inicio_desconto) ? date('d/m/Y', strtotime($produto->data_inicio_desconto)): '' ?>"
+                disabled>
             </div>
         </div>
 
         <div class="col-md-4">
             <div class="form-group">
-                <label for="data_fim_desconto">Data Fim desconto</label>
+                <label for="data_fim_desconto">Data término</label>
                 <input type="text" class="form-control data_mask" name="data_fim_desconto" id="data_fim_desconto"
-                value="<?php echo isset($produto->data_fim_desconto) ? date('d/m/Y', strtotime($produto->data_fim_desconto)): '' ?>">
+                value="<?php echo isset($produto->data_fim_desconto) ? date('d/m/Y', strtotime($produto->data_fim_desconto)): '' ?>"
+                disabled>
             </div>
         </div>
     </div><!--end row-->
-
-
-
-
 
     <hr>
     <div class="row">
@@ -192,25 +216,23 @@
             </div>
         </div>
 
-        <?php //if (isset($produto->codigo) === false) { ?>
-            <div class="col-md-6 mb-2">
-                <div class="form-group">
-                    <label for="nome">Código de barras</label>
-                    <input type="number" class="form-control nome" name="codigo" id="codigo"
-                        placeholder="Número do código de barras"
-                        value="<?php echo isset($produto->codigo) ? $produto->codigo : '' ?>">
-                        <p class="text-muted">
-                            <small>Caso você não tenha um código de barras, deixe vazio para ser preenchido automaticamente!</small>
-                        </p>
-                </div>
+        <div class="col-md-6 mb-2">
+            <div class="form-group">
+                <label for="nome">Código de barras</label>
+                <input type="number" class="form-control nome" name="codigo" id="codigo"
+                    placeholder="Número do código de barras"
+                    value="<?php echo isset($produto->codigo) ? $produto->codigo : '' ?>">
+                    <p class="text-muted">
+                        <small>Caso você não tenha um código de barras, deixe vazio para ser preenchido automaticamente!</small>
+                    </p>
             </div>
-        <?php //} ?>
+        </div>
 
         <div class="col-md-12">
             <div class="form-group">
                 <label for="descricao">Descrição</label>
                 <textarea class="form-control" name="descricao" id="descricao"
-                          placeholder="Deixe uma descrição do Produto!"><?php echo isset($produto->id) ? $produto->descricao : ''; ?></textarea>
+                placeholder="Deixe uma descrição do Produto!"><?php echo isset($produto->id) ? $produto->descricao : ''; ?></textarea>
             </div>
         </div>
 
@@ -283,6 +305,11 @@
         $("#quantidade").prop('disabled', false);
     <?php endif;?>
 
+    <?php if (isset($produto->id) && $produto->em_desconto == 1):?>
+        $(".div-campo-desconto").removeClass('quantidade-desablitado');
+        $(".div-campo-desconto input").prop('disabled', false);
+    <?php endif;?>
+
     $("#ativar_quantidade").click(function() {
         if ($(this).is(':checked')) {
             $(".div-campo-quantidade").removeClass('quantidade-desablitado');
@@ -290,6 +317,16 @@
         } else {
             $(".div-campo-quantidade").addClass('quantidade-desablitado');
             $("#quantidade").prop('disabled', true);
+        }
+    })
+
+    $("#em_desconto").click(function() {
+        if ($(this).is(':checked')) {
+            $(".div-campo-desconto").removeClass('quantidade-desablitado');
+            $(".div-campo-desconto input").prop('disabled', false);
+        } else {
+            $(".div-campo-desconto").addClass('quantidade-desablitado');
+            $(".div-campo-desconto input").prop('disabled', true);
         }
     })
 

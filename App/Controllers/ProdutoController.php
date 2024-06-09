@@ -46,14 +46,21 @@ class ProdutoController extends Controller
         $dados['preco'] = formataValorMoedaParaGravacao($dados['preco']);
         #$dados['preco_custo'] = formataValorMoedaParaGravacao($dados['preco_custo']);
         
+        $dados['mostrar_em_vendas'] = 0;
         if (isset($dados['mostrar_em_vendas'])) {
             $dados['mostrar_em_vendas'] = 1;
-        } else {
-            $dados['mostrar_em_vendas'] = 0;
-        }
-
+        } 
+        
+        $dados['ativar_quantidade'] = 0;
         if (isset($dados['ativar_quantidade'])) {
             $dados['ativar_quantidade'] = 1;
+        } else {
+            $dados['ativar_quantidade'] = 0;
+        }
+        
+        $dados['em_desconto'] = 0;
+        if (isset($dados['em_desconto'])) {
+            $dados['em_desconto'] = 1;
         }
 
         $dados['imagem'] = uploadBase64Image('imagem');
@@ -95,6 +102,8 @@ class ProdutoController extends Controller
         } else {
             $dados['mostrar_em_vendas'] = 0;
         }
+
+        $dados['em_desconto'] = isset($this->post->data()->em_desconto) ? 1 : 0;
 
         # Trata quantidade
         $dados['ativar_quantidade'] = isset($this->post->data()->ativar_quantidade) ? 1 : 0;

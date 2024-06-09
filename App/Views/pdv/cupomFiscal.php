@@ -39,6 +39,7 @@
         <b>PRECO: </b>R$ <?php echo real($venda->preco); ?> <br>
         <b>QTD: </b><?php echo $venda->quantidadeVendida; ?> <br>
         <b>SUB: </b>R$ <?php echo real($venda->valor); ?> <br>
+        <b>DESC: </b>R$ <?php echo real($venda->valor_desconto); ?> <br>
         <br>
     <?php endforeach; ?>
     <center>-----------------------------------</center>

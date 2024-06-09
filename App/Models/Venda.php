@@ -53,27 +53,28 @@ class Venda extends Model
         $codigoVenda = $venda->codigo_venda;
 
         return $this->query(
-            "SELECT vendas.id,
-             vendas.quantidade AS quantidadeVendida,
-             vendas.preco,
-             vendas.valor,
-             vendas.valor_recebido,
-             vendas.troco,
-             vendas.quantidade_parcela,
-             vendas.valor_parcela,
-             clientes.nome AS nomeCliente,
-             clientes.cpf,
-             clientes.cnpj,
-             clientes.id_cliente_tipo,
-             DATE_FORMAT(vendas.created_at,'%d/%m/%Y %h:%m') AS data,
-             produtos.nome,
-             meios_pagamentos.legenda AS meioPagamento,
-             meios_pagamentos.id AS idMeioPagamento
-             FROM vendas
-             INNER JOIN produtos ON vendas.id_produto = produtos.id
-             INNER JOIN meios_pagamentos ON vendas.id_meio_pagamento = meios_pagamentos.id
-             LEFT JOIN clientes ON vendas.id_cliente = clientes.id
-             WHERE vendas.codigo_venda = '{$codigoVenda}'"
+        "SELECT vendas.id,
+            vendas.quantidade AS quantidadeVendida,
+            vendas.preco,
+            vendas.valor,
+            vendas.valor_recebido,
+            vendas.troco,
+            vendas.quantidade_parcela,
+            vendas.valor_parcela,
+            vendas.valor_desconto,
+            clientes.nome AS nomeCliente,
+            clientes.cpf,
+            clientes.cnpj,
+            clientes.id_cliente_tipo,
+            DATE_FORMAT(vendas.created_at,'%d/%m/%Y %h:%m') AS data,
+            produtos.nome,
+            meios_pagamentos.legenda AS meioPagamento,
+            meios_pagamentos.id AS idMeioPagamento
+            FROM vendas
+            INNER JOIN produtos ON vendas.id_produto = produtos.id
+            INNER JOIN meios_pagamentos ON vendas.id_meio_pagamento = meios_pagamentos.id
+            LEFT JOIN clientes ON vendas.id_cliente = clientes.id
+            WHERE vendas.codigo_venda = '{$codigoVenda}'"
         );
     }
 }

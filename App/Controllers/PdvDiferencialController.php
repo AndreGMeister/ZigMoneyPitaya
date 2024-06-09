@@ -62,87 +62,91 @@ class PdvDiferencialController extends Controller
 
     public function saveVendasViaSession()
     {
-        if (!isset($_SESSION['venda']) ||empty($_SESSION['venda'])) {
-            return;
-        }
-
-        $status = false;
-        $meioDePagamento = $this->post->data()->id_meio_pagamento;
-        $dataCompensacao = '0000-00-00';
-
-        # só adiciona caso seja um boleto
-        if ($meioDePagamento == 4) {
-            $dataCompensacao = $this->post->data()->data_compensacao;
-        }
-
-        # Opcao de cartao de credito parcelado
-        $parcelas = !is_null($this->post->data()->quantidade_parcela) ? $this->post->data()->quantidade_parcela : 0;
-        $valorParcela = 0;
-        if ($meioDePagamento == 2) {
-            $totalVenda = (double) json_decode(
-                $this->vendasEmSessaoRepository
-                ->obterValorTotalDosProdutosNaMesa()
-            )->total;
-
-            $valorParcela = $totalVenda / $parcelas;
-        }
-
-        /**
-         * Gera um código unico de venda que será usado em todos os registros desse Loop
-        */
-        $codigoVenda = uniqid(rand(), true).date('s').date('d.m.Y');
-
-        $valorRecebido = formataValorMoedaParaGravacao($this->post->data()->valor_recebido);
-        $troco = formataValorMoedaParaGravacao($this->post->data()->troco);
-
-        foreach ($_SESSION['venda'] as $produto) {
-            $modelProduto = new Produto();
-            $dadoProduto = $modelProduto->find($produto['id']);
-            
-            # Verifica se o produto tem desconto e se está dentro do periodo de desconto
-            $descontoEstadentroDoPeriodo = $modelProduto->descontoEstadentroDoPeriodo(
-                $dadoProduto->data_inicio_desconto, 
-                $dadoProduto->data_fim_desconto
-            );
-            
-            $sedesconto = false;
-            # Se o produto tiver desconto e estiver dentro do periodo de desconto
-            if (!is_null($dadoProduto->valor_desconto) && $descontoEstadentroDoPeriodo) {
-                $produto['preco'] = $dadoProduto->preco - $dadoProduto->valor_desconto;
-                $sedesconto = true;
+        try {
+            if (!isset($_SESSION['venda']) ||empty($_SESSION['venda'])) {
+                return;
             }
 
-            $dados = [
-                'id_usuario' => $this->idUsuario,
-                'data_compensacao' => $dataCompensacao,
-                'id_empresa' => $this->idEmpresa,
-                'id_produto' => $produto['id'],
-                'preco' => $produto['preco'],
-                'quantidade' => $produto['quantidade'],
-                'valor' => $produto['total'],
-                'codigo_venda' => $codigoVenda,
-                'id_meio_pagamento' => $this->post->data()->id_meio_pagamento,
-                'quantidade_parcela' => $parcelas,
-                'valor_parcela' => $valorParcela
-            ];
+            $status = false;
+            $meioDePagamento = $this->post->data()->id_meio_pagamento;
+            $dataCompensacao = '0000-00-00';
 
-            if ($sedesconto) {
-                $dados['valor_desconto'] = $dadoProduto->valor_desconto;
+            # só adiciona caso seja um boleto
+            if ($meioDePagamento == 4) {
+                $dataCompensacao = $this->post->data()->data_compensacao;
             }
 
-            if (isset($_SESSION['cliente']['id_cliente'])) {
-                $dados['id_cliente'] = $_SESSION['cliente']['id_cliente'];
+            # Opcao de cartao de credito parcelado
+            $parcelas = 0;
+            $valorParcela = 0;
+            if (!is_null($this->post->data()->quantidade_parcela) && $this->post->data()->quantidade_parcela != 'selecione') {
+                $parcelas = $this->post->data()->quantidade_parcela;
+                if ($meioDePagamento == 2) {
+                    $totalVenda = (double) json_decode(
+                        $this->vendasEmSessaoRepository
+                        ->obterValorTotalDosProdutosNaMesa()
+                    )->total;
+
+                    $valorParcela = $totalVenda / $parcelas;
+                }
             }
+        
+            /**
+             * Gera um código unico de venda que será usado em todos os registros desse Loop
+            */
+            $codigoVenda = uniqid(rand(), true).date('s').date('d.m.Y');
 
-            if ( ! empty($valorRecebido) && ! empty($troco)) {
-                $dados['valor_recebido'] = $valorRecebido;
-                $dados['troco'] = $troco;
-            }
+            $valorRecebido = formataValorMoedaParaGravacao($this->post->data()->valor_recebido);
+            $troco = formataValorMoedaParaGravacao($this->post->data()->troco);
 
-           // dd($dados);
+            foreach ($_SESSION['venda'] as $produto) {
+                $modelProduto = new Produto();
+                $dadoProduto = $modelProduto->find($produto['id']);
 
-            $venda = new Venda();
-            try {
+                $seDesconto = false;
+                # Verifica se o produto esta ativo para desconto
+                if ($dadoProduto->em_desconto) {
+                    # Verifica se o produto tem desconto e se está dentro do periodo de desconto
+                    $descontoEstadentroDoPeriodo = $modelProduto->descontoEstadentroDoPeriodo(
+                        $dadoProduto->data_inicio_desconto, 
+                        $dadoProduto->data_fim_desconto
+                    );
+                    
+                    # Se o produto tiver desconto e estiver dentro do periodo de desconto
+                    if (!is_null($dadoProduto->valor_desconto) && $descontoEstadentroDoPeriodo) {
+                        $produto['preco'] = $dadoProduto->preco - $dadoProduto->valor_desconto;
+                        $seDesconto = true;
+                    }
+                }
+
+                $dados = [
+                    'id_usuario' => $this->idUsuario,
+                    'data_compensacao' => $dataCompensacao,
+                    'id_empresa' => $this->idEmpresa,
+                    'id_produto' => $produto['id'],
+                    'preco' => $produto['preco'],
+                    'quantidade' => $produto['quantidade'],
+                    'valor' => $produto['total'],
+                    'codigo_venda' => $codigoVenda,
+                    'id_meio_pagamento' => $this->post->data()->id_meio_pagamento,
+                    'quantidade_parcela' => $parcelas,
+                    'valor_parcela' => $valorParcela,
+                    'valor_desconto' => ($seDesconto) ? $dadoProduto->valor_desconto : 0
+                ];
+
+                if (isset($_SESSION['cliente']['id_cliente'])) {
+                    $dados['id_cliente'] = $_SESSION['cliente']['id_cliente'];
+                }
+
+                if ( ! empty($valorRecebido) && ! empty($troco)) {
+                    $dados['valor_recebido'] = $valorRecebido;
+                    $dados['troco'] = $troco;
+                }
+
+
+                //dd($dados);
+
+                $venda = new Venda();
                 $venda = $venda->save($dados);
                 
                 if ($venda) {
@@ -150,17 +154,17 @@ class PdvDiferencialController extends Controller
                     $produto->decrementaQuantidadeProduto((int) $dados['id_produto'], (int) $dados['quantidade']);
                     $status = true;
                 }
-
-                unset($_SESSION['venda']);
-                unset($_SESSION['cliente']);
-
-            } catch (\Exception $e) {
-                echo json_encode(['error' => $e->getMessage()]);
-                return false;
             }
-        }
+            
+            unset($_SESSION['venda']);
+            unset($_SESSION['cliente']);
 
-        echo json_encode(['status' => $status, 'idVenda' => $venda]);
+            echo json_encode(['status' => $status, 'idVenda' => $venda]);
+
+        } catch (\Exception $e) {
+            echo json_encode(['error' => 'erro ao salvar vendas']);
+            return false;
+        }
     }
 
     public function colocarProdutosNaMesa($idProduto)
