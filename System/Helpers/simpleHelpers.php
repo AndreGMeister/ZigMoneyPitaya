@@ -228,3 +228,29 @@ function stringAbreviation($string, $length, $end)
     $output = str_split($string, $length);
     return $output[0].$end;
 }
+
+/**
+ * Show image in front-end
+ * @param $image
+ */
+function showImage($image)
+{
+    if (is_null($image) || empty($image)) {
+        return false;
+    }
+
+    if (!str_contains($image, 'public')) {
+        return BASEURL."/public/".$image;
+    }
+
+    return BASEURL."/".$image;
+}
+
+/**
+ * Used to create the image directory in shared hosting
+ * @param $folderName
+ */
+function imageDirectory($folderName)
+{
+    return filter_var($_ENV['SHARED_HOST'], FILTER_VALIDATE_BOOLEAN) ? "imagem/{$folderName}/" : "public/imagem/{$folderName}/";
+}

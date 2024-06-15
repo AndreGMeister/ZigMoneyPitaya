@@ -17,7 +17,7 @@
             <div class="form-group">
                 <label for="nome">Nome *</label>
                 <input type="text" class="form-control" name="nome" id="nome" placeholder="Digite o nome do usuário!"
-                       value="<?php echo isset($usuario->id) ? $usuario->nome : '' ?>">
+                    value="<?php echo isset($usuario->id) ? $usuario->nome : '' ?>">
             </div>
         </div>
 
@@ -25,8 +25,8 @@
             <div class="form-group">
                 <label for="email">E-mail *</label>
                 <input type="text" class="form-control" name="email" id="email" placeholder="Digite o e-mail de acesso!"
-                       value="<?php echo isset($usuario->id) ? $usuario->email : '' ?>"
-                       onchange="verificaSeEmailExiste(this, <?php echo isset($usuario->id) ? $usuario->id : false; ?>)">
+                    value="<?php echo isset($usuario->id) ? $usuario->email : '' ?>"
+                    onchange="verificaSeEmailExiste(this, <?php echo isset($usuario->id) ? $usuario->id : false; ?>)">
             </div>
         </div>
 
@@ -34,7 +34,7 @@
             <div class="form-group">
                 <label for="password">Senha *</label>
                 <input type="password" class="form-control" name="password" id="password" placeholder="Digite a senha"
-                       value="">
+                    value="">
             </div>
         </div>
 
@@ -57,8 +57,8 @@
         </div>
 
         <!--
-          Se o usuario logado for o mesmo que será editado, não mostra o campo de perfis porque
-          um usuario não deve mudar o seu proprio perfil de usuario.
+        Se o usuario logado for o mesmo que será editado, não mostra o campo de perfis porque
+        um usuario não deve mudar o seu proprio perfil de usuario.
         -->
 
         <div class="col-md-4">
@@ -84,10 +84,11 @@
             <div class="form-group">
                 <label for="imagem">Escolher Imagem de Perfil</label>
                 <input type="file" class="form-control" name="imagem" id="imagem"> <br>
+                <img src="" class="imagem-produto imagem-perfil" id="thumb" style="display:none">
                 <?php if (isset($usuario->id)) : ?>
                     <img src="<?php echo $usuario->imagem; ?>" class="perfil">
                 <?php else : ?>
-                    <i class="fas fa-user" style="font-size:40px"></i>
+                    <i class="fas fa-user image-icons" style="font-size:40px"></i>
                 <?php endif; ?>
             </div>
         </div>
@@ -156,4 +157,23 @@
             }
         });
     }
+
+    $("#imagem").change(function() {
+        let reader = new FileReader();
+        let file = document.querySelector("#imagem");
+        let photo = document.querySelector("#thumb");
+        reader.onload = () => {
+            photo.src = reader.result;
+        }
+
+        $("._padrao").hide();
+        $("#thumb").show();
+        $('.image-icons').hide();
+        $('.perfil').hide();
+        reader.readAsDataURL(file.files[0]);
+    })
+
+    $("#imagem").change(function() {
+        verificaExtensaoArquivo($(this).val());
+    })
 </script>

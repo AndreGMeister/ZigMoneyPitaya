@@ -15,6 +15,7 @@ use System\Session\Session;
         object-fit: cover;
         object-position: center;
         border-radius: 50%;
+        border: 1px solid silver;
     }
 </style>
 
@@ -54,7 +55,7 @@ use System\Session\Session;
                         <td>
                             <?php if (!is_null($usuario->imagem) && $usuario->imagem != ''): ?>
                                 <center>
-                                    <img src="<?php echo $usuario->imagem; ?>" width="40" class="imagem-perfil">
+                                    <img src="<?php echo showImage($usuario->imagem); ?>" width="40" class="imagem-perfil">
                                 </center>
                             <?php else: ?>
                                 <center><i class="fas fa-user" style="font-size:40px"></i></center>

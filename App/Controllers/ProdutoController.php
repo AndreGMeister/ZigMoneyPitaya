@@ -16,6 +16,7 @@ class ProdutoController extends Controller
     protected $get;
     protected $layout;
     protected $idEmpresa;
+    protected $diretorioImagemProdutoPadrao = 'produtos';
 
     public function __construct()
     {
@@ -63,7 +64,22 @@ class ProdutoController extends Controller
             $dados['em_desconto'] = 1;
         }
 
-        $dados['imagem'] = uploadBase64Image('imagem');
+        # Valida imagem somente se existir no envio
+        if (!empty($_FILES["imagem"]['name'])) {
+            $retornoImagem = uploadImageHelper(
+                new UploadFiles(),
+                imageDirectory($this->diretorioImagemProdutoPadrao),
+                $_FILES["imagem"]
+            );
+
+            # Verifica de houve erro durante o upload de imagem
+            if (is_array($retornoImagem)) {
+                Session::flash('error', $retornoImagem['error']);
+                return $this->get->redirectTo("produto");
+            }
+        }
+
+        $dados['imagem'] = $retornoImagem ?? null;
 
         try {
             $idProduto = $produto->save($dados);
@@ -120,9 +136,28 @@ class ProdutoController extends Controller
         if (isset($this->post->data()->data_fim_desconto)) {
             $dados['data_fim_desconto'] = dateFormat($this->post->data()->data_fim_desconto) . ' 23:59:59';
         }
-       
-        $dados['imagem'] = (!is_null(uploadBase64Image('imagem')) ? uploadBase64Image('imagem') : $dadosProduto->imagem);
 
+        if (!empty($_FILES["imagem"]['name'])) {
+            if (!is_null($dadosProduto->imagem) && file_exists($dadosProduto->imagem)) {
+                # Deleta a imagem anterior
+                unlink($dadosProduto->imagem);
+            }
+     
+            $retornoImagem = uploadImageHelper(
+                new UploadFiles(),
+                imageDirectory($this->diretorioImagemProdutoPadrao),
+                $_FILES["imagem"]
+            );
+            
+            # Verifica de houve erro durante o upload de imagem
+            if (is_array($retornoImagem)) {
+                Session::flash('error', $retornoImagem['error']);
+                return $this->get->redirectTo("produto");
+            }
+
+            $dados['imagem'] = $retornoImagem;
+        }
+       
         try {
             $produto->update($dados, $dadosProduto->id);
             return $this->get->redirectTo("produto");

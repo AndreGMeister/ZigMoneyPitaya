@@ -98,7 +98,7 @@
                 <tr>
                     <td class="hidden-when-mobile hidden-when-print">
                         <?php if (!is_null($venda->imagem) || $venda->imagem != ''): ?>
-                            <img class="imagem-perfil hidden-when-print" src="<?php echo $venda->imagem; ?>"
+                            <img class="imagem-perfil hidden-when-print" src="<?php echo showImage($venda->imagem); ?>"
                                 alt="Imagem do perfil"
                                 title="<?php echo $venda->nomeUsuario; ?>">
                         <?php else: ?>
@@ -108,7 +108,7 @@
 
                     <td class="hidden-when-mobile">
                         <?php if (!is_null($venda->produtoImagem) || $venda->produtoImagem != ''): ?>
-                            <img class="imagem-perfil" style="border:1px solid silver" src="<?php echo $venda->produtoImagem; ?>"
+                            <img class="imagem-perfil" style="border:1px solid silver" src="<?php echo showImage($venda->produtoImagem); ?>"
                                 alt="Imagem do perfil"
                                 title="<?php echo $venda->produtoNome . ' | R$:' . real($venda->preco); ?>">
                         <?php elseif (!is_null($venda->quantidade)): ?>

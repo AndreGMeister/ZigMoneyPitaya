@@ -25,9 +25,9 @@
                 <td>
                     <?php if (!is_null($produto->imagem) && $produto->imagem != ''): ?>
                         <center>
-                            <img src="<?php echo $produto->imagem; ?>" width="40"
+                            <img src="<?php echo showImage($produto->imagem); ?>" width="40"
                                 class="imagem-produto" title="Visualizar Imagem!"
-                                onclick="modalImagemDoProduto('<?php echo $imagem;?>', '<?php echo $produto->nome;?>')">
+                                onclick="modalImagemDoProduto('<?php echo showImage($produto->imagem);?>', '<?php echo $produto->nome;?>')">
                         </center>
                     <?php else: ?>
                         <center><i class="fas fa-box-open" style="font-size:25px"></i></center>

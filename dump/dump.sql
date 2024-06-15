@@ -408,3 +408,13 @@ ADD em_desconto INT DEFAULT 0;
 ALTER TABLE vendas
 ADD valor_desconto DECIMAL(10,2);
 
+/*
+Passos para serem exacutados am producao para transformar o campo imagem de produtos em text
+
+update produtos set imagem = null where id > 0;
+ALTER TABLE produtos MODIFY imagem TEXT;
+
+update usuarios set imagem = null where id > 0;
+ALTER TABLE usuarios MODIFY imagem TEXT;
+
+*/

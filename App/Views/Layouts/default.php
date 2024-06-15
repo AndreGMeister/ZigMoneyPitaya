@@ -171,7 +171,7 @@ $configPdv = $configPdv->configPdv(Session::get('idEmpresa'));
 
                         <?php $imagemPerfil = Session::get('imagem'); ?>
                         <?php if ($imagemPerfil != false): ?>
-                            <img class="perfil" src="<?php echo Session::get('imagem') ?>">
+                            <img class="perfil" src="<?php echo showImage(Session::get('imagem')) ?>">
                         <?php else: ?>
                             <i class="fas fa-user" style="font-size:30px;"></i>
                         <?php endif; ?>

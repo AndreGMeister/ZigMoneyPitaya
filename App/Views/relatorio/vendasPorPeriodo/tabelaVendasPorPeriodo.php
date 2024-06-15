@@ -88,7 +88,7 @@
             <tr>
                 <td class="hidden-when-mobile">
                     <?php if (!is_null($venda->imagem) || $venda->imagem != ''): ?>
-                        <img class="imagem-perfil" src="<?php echo $venda->imagem; ?>"
+                        <img class="imagem-perfil" src="<?php echo showImage($venda->imagem); ?>"
                              alt="Imagem do perfil"
                              title="Vendedor: <?php echo $venda->nomeUsuario; ?>">
                     <?php else: ?>

@@ -23,7 +23,7 @@
             ?>
             <div class="col-lg-2 card-produtos <?php echo $seProdutoEsgotado == 'esgotado' ? 'estoque_esgotado' : false;?>">
                 <?php if (!is_null($produto->imagem) && $produto->imagem != ''): ?>
-                    <img src="<?php echo $produto->imagem; ?>" title="Adicionar!"
+                    <img src="<?php echo showImage($produto->imagem); ?>" title="Adicionar!"
                         onclick="colocarProdutosNaMesa('<?php echo $produto->id; ?>', this, '<?php echo $seProdutoEsgotado;?>')">
                         <?php else: ?>
                     <i class="fas fa-box-open icone-produtos" style="font-size:50px"

@@ -23,6 +23,7 @@ class UsuarioController extends Controller
     protected $idEmpresa;
     protected $idUsuarioLogado;
     protected $idPerfilUsuarioLogado;
+    protected $diretorioImagemProdutoPadrao = 'perfil_usuarios';
 
     public function __construct()
     {
@@ -57,7 +58,22 @@ class UsuarioController extends Controller
         $dados = (array)$this->post->data();
         $dados['password'] = createHash($dados['password']);
 
-        $dados['imagem'] = uploadBase64Image('imagem');
+        # Valida imagem somente se existir no envio
+        if (!empty($_FILES["imagem"]['name'])) {
+            $retornoImagem = uploadImageHelper(
+                new UploadFiles(),
+                imageDirectory($this->diretorioImagemProdutoPadrao),
+                $_FILES["imagem"]
+            );
+
+            # Verifica de houve erro durante o upload de imagem
+            if (is_array($retornoImagem)) {
+                Session::flash('error', $retornoImagem['error']);
+                return $this->get->redirectTo("usuario");
+            }
+        }
+
+        $dados['imagem'] = $retornoImagem ?? null;
 
         try {
             # Cadastra Usuário
@@ -79,12 +95,31 @@ class UsuarioController extends Controller
             'id_sexo', 'id_perfil'
         ]);
 
-        $dados['imagem'] = (!is_null(uploadBase64Image('imagem')) ? uploadBase64Image('imagem') : $dadosUsuario->imagem) ;
-
         if (!is_null($this->post->data()->password)) {
             $dados['password'] = createHash($this->post->data()->password);
         } else {
             unset($dados['password']);
+        }
+
+        if (!empty($_FILES["imagem"]['name'])) {
+            if (!is_null($dadosUsuario->imagem) && file_exists($dadosUsuario->imagem)) {
+                # Deleta a imagem anterior
+                unlink($dadosUsuario->imagem);
+            }
+
+            $retornoImagem = uploadImageHelper(
+                new UploadFiles(),
+                imageDirectory($this->diretorioImagemProdutoPadrao),
+                $_FILES["imagem"]
+            );
+
+            # Verifica de houve erro durante o upload de imagem
+            if (is_array($retornoImagem)) {
+                Session::flash('error', $retornoImagem['error']);
+                return $this->get->redirectTo("usuario");
+            }
+
+            $dados['imagem'] = $retornoImagem;
         }
 
         try {
