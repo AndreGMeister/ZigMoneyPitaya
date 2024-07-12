@@ -51,19 +51,26 @@ class ProdutoController extends Controller
         if (isset($dados['mostrar_em_vendas'])) {
             $dados['mostrar_em_vendas'] = 1;
         } 
-        
-        $dados['ativar_quantidade'] = 0;
-        if (isset($dados['ativar_quantidade'])) {
+
+        if (isset($dados['ativar_quantidade']) && $dados['ativar_quantidade'] == 'on') {
             $dados['ativar_quantidade'] = 1;
         } else {
             $dados['ativar_quantidade'] = 0;
         }
         
-        $dados['em_desconto'] = 0;
-        if (isset($dados['em_desconto'])) {
+        if (isset($dados['em_desconto']) && $dados['em_desconto'] == 'on') {
             $dados['em_desconto'] = 1;
-        }
+            $dados['valor_desconto'] = isset($this->post->data()->valor_desconto) ? formataValorMoedaParaGravacao($this->post->data()->valor_desconto) : null;
 
+            if (isset($this->post->data()->data_inicio_desconto)) {
+                $dados['data_inicio_desconto'] = dateFormat($this->post->data()->data_inicio_desconto) . ' 00:00:00';
+            }
+            
+            if (isset($this->post->data()->data_fim_desconto)) {
+                $dados['data_fim_desconto'] = dateFormat($this->post->data()->data_fim_desconto) . ' 23:59:59';
+            }
+        } 
+        
         # Valida imagem somente se existir no envio
         if (!empty($_FILES["imagem"]['name'])) {
             $retornoImagem = uploadImageHelper(
@@ -81,8 +88,11 @@ class ProdutoController extends Controller
 
         $dados['imagem'] = $retornoImagem ?? null;
 
+
+        //dd($dados);
         try {
             $idProduto = $produto->save($dados);
+     
 
             # adiciona codigo de barras se nao existir
             if (empty($dados['codigo'])) {

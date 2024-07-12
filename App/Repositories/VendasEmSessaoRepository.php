@@ -37,8 +37,10 @@ class VendasEmSessaoRepository
                         $total = (float) $produto->preco - (float) $produto->valor_desconto;
                         $seDesconto = true;
                     }
-                } else {
-                    # Calcula sem desconto
+                } 
+                
+                # Calcula sem desconto
+                if (!$seDesconto) {
                     $total = (float) $produto->preco * (float) $quantidade;
                 }
 
@@ -46,13 +48,15 @@ class VendasEmSessaoRepository
                     'id' => $idProduto,
                     'produto' => $produto->nome,
                     'preco' => $seDesconto ? $total : $produto->preco,
-                    //'imagem' => $produto->imagem,
+                    'imagem' => $produto->imagem,
                     'quantidade' => $quantidade,
                     'total' => $total,
                     'unidade' => $produto->unidade,
                     'comDesconto' => $seDesconto,
-                    'valorDesconto' => $produto->valor_desconto
+                    'valorDesconto' => ($seDesconto) ? $produto->valor_desconto : 0
                 ];
+
+                dd($_SESSION['venda']);
            }
         }
 

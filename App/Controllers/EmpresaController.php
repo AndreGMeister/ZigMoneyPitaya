@@ -60,20 +60,20 @@ class EmpresaController extends Controller
                 $configPdv = new ConfigPdv();
                 $configPdv->save([
                     'id_empresa' => $empresa->lastId(),
-                    'id_tipo_pdv' => 1
+                    'id_tipo_pdv' => 2
                 ]);
 
                 # Cadastra um Usuário para empresa
                 $usuario = new Usuario();
-                $usuario->save([
+                $usuarioId = $usuario->save([
                     'id_empresa' => $empresa->lastId(),
                     'nome' => $dados['nome'],
                     'email' => $dados['email'],
                     'password' => createHash('33473347'),
                     'id_sexo' => 1,
-                    'id_perfil' => ConfigPerfil::adiministrador()
+                    'id_perfi' => ConfigPerfil::adiministrador()
                 ]);
-
+                
                 return $this->get->redirectTo("empresa");
 
             } catch (Exception $e) {
