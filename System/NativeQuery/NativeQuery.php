@@ -156,18 +156,10 @@ class NativeQuery
         return $this->db->lastInsertId();
     }
 
-    public function beginTransaction()
+    public function hardDelete($id)
     {
-        return $this->db->beginTransaction();
-    }
-
-    public function commit()
-    {
-        return $this->db->commit();
-    }
-
-    public function rollBack()
-    {
-        return $this->db->rollBack();
+        $id = (int) $id;
+        $query = $this->db->prepare("DELETE FROM {$this->table} WHERE id = ?");
+        return $query->execute(array($id));
     }
 }

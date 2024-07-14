@@ -153,7 +153,8 @@ $route->get('test/vendedores', 'Api\TesteController@vendedores');
 
 # ----- # ----- CadastroExternoController --------------------------------
 $route->get('criarConta/index', 'CadastroExternoController@index');
-
+$route->get('criarConta/verificaSeEmailExiste/{email}', 'CadastroExternoController@verificaSeEmailExiste');
+$route->post('criarConta/cadastrar', 'CadastroExternoController@cadastrar');
 
 $route->get('testing', 'ProdutoController@testing');
 

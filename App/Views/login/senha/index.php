@@ -1,10 +1,12 @@
 <!--Usando o Html Components-->
 <?php
-
 use System\HtmlComponents\FlashMessage\FlashMessage;
 use System\HtmlComponents\Modal\Modal;
-
 ?>
+
+<h5 class="card-title text-center">
+    Bem vindo
+</h5>
 
 <form class="form-signin" method="post" action="<?php echo BASEURL; ?>/login/senha">
 

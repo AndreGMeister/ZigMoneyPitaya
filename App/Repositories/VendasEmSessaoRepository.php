@@ -55,8 +55,6 @@ class VendasEmSessaoRepository
                     'comDesconto' => $seDesconto,
                     'valorDesconto' => ($seDesconto) ? $produto->valor_desconto : 0
                 ];
-
-                dd($_SESSION['venda']);
            }
         }
 

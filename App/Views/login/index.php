@@ -7,6 +7,9 @@ use System\HtmlComponents\FlashMessage\FlashMessage; ?>
     <?php FlashMessage::show(); ?>
 </div>
 
+<h5 class="card-title text-center">
+    Bem vindo
+</h5>
 <form class="form-signin" method="post" action="<?php echo BASEURL; ?>/login/logar">
 
     <!-- token de segurança -->
@@ -35,13 +38,16 @@ use System\HtmlComponents\FlashMessage\FlashMessage; ?>
         <a href="<?php echo BASEURL; ?>/login/senha">Esqueci a minha senha</a>
     </div>
 
-    <!--
+    
     <hr class="my-4">
 
     <center>
-        <small style="opacity:0.60;">Que tal criar uma conta agora mesmo?</small><br><br>
-        <a href="<?php echo BASEURL;?>/criarConta/index" class="btn btn-lg btn-secondary btn-block text-uppercase" style="color:white">Criar conta</a>
-    </center>-->
+        <div class="form-links">
+            <a href="<?php echo BASEURL;?>/criarConta/index" style="color:#0050A6">
+                Criar uma conta
+            </a>
+        </div>
+    </center>
 
     <hr class="my-4">
 

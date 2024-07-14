@@ -143,9 +143,6 @@ class PdvDiferencialController extends Controller
                     $dados['troco'] = $troco;
                 }
 
-
-                //dd($dados);
-
                 $venda = new Venda();
                 $venda = $venda->save($dados);
                 
