@@ -121,6 +121,15 @@ $configPdv = $configPdv->configPdv(Session::get('idEmpresa'));
         select {
             height:40px!important;
         }
+        
+        .doacao {
+            background:#FACA15;
+            color:black;
+            font-size:16px;
+            margin-bottom:20px;
+            padding:10px;
+            border-radius:10px;
+        }
     </style>
 </head>
 
@@ -243,6 +252,12 @@ $configPdv = $configPdv->configPdv(Session::get('idEmpresa'));
         <!-- End Navbar -->
 
         <div class="content">
+        <div class="col-md-12 doacao">
+        <center>
+            Contribua com uma doação para desbloquear funcionalidades e apoiar o desenvolvimento do projeto. <br>
+            <b>Chave PIX: zigmoneypdv@hotmail.com</b>
+        </center>
+    </div>
             <!--Include the content into the layout-->
             <?php $this->viewRender(); ?>
         </div>
